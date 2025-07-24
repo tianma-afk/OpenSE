@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/fileAction.svg</file>
+        <file>icons/cpp_file.svg</file>
+        <file>icons/folder.svg</file>
+        <file>icons/header_file.svg</file>
+        <file>icons/python_file.svg</file>
+        <file>icons/runAction.svg</file>
+    </qresource>
+</RCC>

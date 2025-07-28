@@ -9,21 +9,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    TabWidget.cpp \
-    fileexplorer.cpp \
-    filetreeview.cpp \
+    clicklabel.cpp \
     main.cpp \
     mainwindow.cpp \
-    measurewidget.cpp \
-    terminalwidget.cpp
+    projectdelegate.cpp \
+    projectlistmodel.cpp \
+    projectwidget.cpp
 
 HEADERS += \
-    TabWidget.h \
-    fileexplorer.h \
-    filetreeview.h \
+    clicklabel.h \
     mainwindow.h \
-    measurewidget.h \
-    terminalwidget.h
+    projectdelegate.h \
+    projectlistmodel.h \
+    projectwidget.h
 
 FORMS += \
     mainwindow.ui

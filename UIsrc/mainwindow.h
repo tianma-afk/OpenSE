@@ -2,10 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "fileexplorer.h"
-#include<QPlainTextEdit>
-#include"TabWidget.h"
-
+#include"projectwidget.h"
+#include"clicklabel.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -23,34 +21,26 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    //UI组件
+    ProjectWidget *projectWidget=nullptr;
+    ClickLabel *githubLabel;
+    QWidget *SPHelper=nullptr;
+
+    //状态
+    bool isSPHelperHidden=true;
+
     //菜单栏
     void createMenu();
 
-    //工具栏
-    void createToolBar();
-    FileExplorer *fileExplorer;
-    bool fileExplorerVisible=true;
-
-    //代码编辑区
-    void createCodeEditor();
-    QPlainTextEdit *codeEditor;
-    TabWidget *tabWidget;
+    //主页面
+    void initialWidget();
 
 private slots:
     //菜单栏
-    void onMenuNewFileTriggered();
-    void onMenuOpenFileTriggered();
-    void onMenuTerminalTriggered();
-    void onMenuMeasureTriggered();
-    void onMenuSimulateTriggered();
-    //工具栏
-    void onFileExplorerTriggered();
-    void onRunTriggered();
+    void onMenuSerialPortTriggered();
+
+
     //状态栏
 
-    //代码编辑区
-    void openFile(const QModelIndex &index);
-    QString getFullPath(QStandardItem *item);
-    void closeTab(int index);
 };
 #endif // MAINWINDOW_H

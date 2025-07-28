@@ -6,5 +6,7 @@
         <file>icons/header_file.svg</file>
         <file>icons/python_file.svg</file>
         <file>icons/runAction.svg</file>
+        <file>styles/normal.qss</file>
+        <file>icons/github.svg</file>
     </qresource>
 </RCC>

@@ -45,6 +45,11 @@ bool ProjectListModel::setData(const QModelIndex& index, const QVariant& value, 
     case Qt::CheckStateRole:
         // 更新 checkedItems，记录复选框的状态
         checkedItems[index.row()] = (value.toBool());
+        if(value.toBool()==true){
+            checkedNum++;
+        }else{
+            checkedNum--;
+        }
         emit dataChanged(index, index, { role });
         return true;
     case Qt::EditRole:
@@ -62,4 +67,9 @@ Qt::ItemFlags ProjectListModel::flags(const QModelIndex& index) const{
         return Qt::NoItemFlags;
     // 添加 Qt::ItemIsEditable 以支持编辑
     return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
+}
+
+int ProjectListModel::getCheckedNum() const
+{
+    return checkedNum;
 }

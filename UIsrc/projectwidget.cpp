@@ -27,6 +27,7 @@ void ProjectWidget::initialUI()
     this->headLabel=new QLabel(this->topWidget);
     this->topHLayout->addWidget(headLabel);
     this->headLabel->setText("项目");
+    this->headLabel->setObjectName("project_top");
 
     this->newProjectBtn=new QPushButton(this->topWidget);
     this->topHLayout->addWidget(newProjectBtn);
@@ -44,9 +45,14 @@ void ProjectWidget::initialUI()
 
     this->bodyVLayout=new QVBoxLayout(this->bodyWidget);
     this->bodyWidget->setLayout(this->bodyVLayout);
+    this->bodyVLayout->setSpacing(0);
 
-    listView = new QListView(this->bodyWidget);
-    this->bodyVLayout->addWidget(listView);
+    this->headWidget=new HeadWidget(this->bodyWidget);
+    this->bodyVLayout->addWidget(this->headWidget,0);
+    this->headWidget->setObjectName("project_body_head");
+
+    this->listView = new QListView(this->bodyWidget);
+    this->bodyVLayout->addWidget(listView,1);
 
 
 }
@@ -56,9 +62,15 @@ void ProjectWidget::initialData()
     auto insertCount = 10;// 构造展示10条数据
     ProjectDelegate* delegate = new ProjectDelegate(listView);
 
-    listView->setModel(new ProjectListModel(insertCount));
+
+    ProjectListModel *model=new ProjectListModel(insertCount);
+    listView->setModel(model);
+    delegate->setModel(model);
+
     listView->setItemDelegate(delegate);
 
+    connect(this->headWidget,&HeadWidget::checkedChanged,delegate,&ProjectDelegate::checkAllchanged);
+    connect(delegate,&ProjectDelegate::singleCheckedChange,this->headWidget,&HeadWidget::checkStateChangeForSingle);
     // 优化性能
     listView->setUniformItemSizes(true);
     listView->setSelectionMode(QAbstractItemView::SingleSelection);

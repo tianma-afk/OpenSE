@@ -4,9 +4,9 @@ ProjectDelegate::ProjectDelegate(QObject* parent): QStyledItemDelegate(parent) {
 
 // 绘制列表项
 void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const{
-    QStyleOptionButton buttonOption;
-    QRect buttonRect = QRect(option.rect.right() - 80, option.rect.y() + 1, 78, option.rect.height() - 2);
-    buttonOption.rect = buttonRect;
+    // QStyleOptionButton buttonOption;
+    // QRect buttonRect = QRect(option.rect.right() - 80, option.rect.y() + 1, 78, option.rect.height() - 2);
+    // buttonOption.rect = buttonRect;
 
     QStyleOptionButton checkboxOption;
     QRect checkboxRect = QRect(option.rect.x() + 5, option.rect.y() + 5, option.rect.height() - 10, option.rect.height() - 10);
@@ -32,13 +32,19 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
     // 绘制复选框
     QApplication::style()->drawControl(QStyle::CE_CheckBox, &checkboxOption, painter);
 
-    // 绘制按钮
-    buttonOption.text = "按钮";
-    QApplication::style()->drawControl(QStyle::CE_PushButton, &buttonOption, painter);
+    // // 绘制按钮
+    // buttonOption.text = "按钮";
+    // QApplication::style()->drawControl(QStyle::CE_PushButton, &buttonOption, painter);
 
     // 绘制文本
-    QRect textRect = option.rect.adjusted(checkboxRect.width() + 10, 0, -buttonRect.width() - 10, 0);
-    painter->drawText(textRect, Qt::AlignVCenter, index.data().toString());
+    QRect nameTextRect = option.rect.adjusted(checkboxRect.width() + 10, 0, - 200, 0);
+    painter->drawText(nameTextRect, Qt::AlignVCenter, index.data().toString());
+
+    QRect createTimeTextRect = option.rect.adjusted(option.rect.right()-300, 0, -100, 0);
+    painter->drawText(createTimeTextRect, Qt::AlignVCenter, index.data().toString());
+
+    QRect modifyTimeTextRect = option.rect.adjusted(option.rect.right()-100, 0, 0, 0);
+    painter->drawText(modifyTimeTextRect, Qt::AlignVCenter, index.data().toString());
 
     painter->restore();
 }
@@ -47,17 +53,22 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
 bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index)  {
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* mouseEvent = (QMouseEvent*)event;
-        QRect buttonRect = QRect(option.rect.right() - 80, option.rect.y() + 5, 70, option.rect.height() - 10);
+        // QRect buttonRect = QRect(option.rect.right() - 80, option.rect.y() + 5, 70, option.rect.height() - 10);
         QRect checkboxRect = QRect(option.rect.x() + 5, option.rect.y() + 5, option.rect.height() - 10, option.rect.height() - 10);
 
-        if (buttonRect.contains(mouseEvent->pos())) {
+        /*if (buttonRect.contains(mouseEvent->pos())) {
             // 按钮被点击
             qDebug() << "按钮点击，项：" << index.row();
-        } else if (checkboxRect.contains(mouseEvent->pos())) {
+        } else */if (checkboxRect.contains(mouseEvent->pos())) {
             // 切换复选框状态
             bool checked = !index.data(Qt::CheckStateRole).toBool();
             model->setData(index, checked ? Qt::Checked : Qt::Unchecked, Qt::CheckStateRole);
-            qDebug() << "勾选checkbox，项：" << index.row();
+            if(((ProjectListModel*)model)->getCheckedNum()==((ProjectListModel*)model)->rowCount()){
+                emit singleCheckedChange(true);
+            }else{
+                emit singleCheckedChange(false);
+            }
+            // qDebug() << "勾选checkbox，项：" << index.row();
         }
         return true; // 事件已处理
     }
@@ -67,4 +78,24 @@ bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, cons
 // 提供项的大小提示
 QSize ProjectDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const{
     return QSize(option.rect.width(), 34); // 调整为所需的大小
+}
+
+void ProjectDelegate::setModel(ProjectListModel *model)
+{
+    this->model=model;
+}
+
+
+void ProjectDelegate::checkAllchanged(bool checked)
+{
+    // 遍历所有行，更新选中状态
+    for (int row = 0; row < model->rowCount(); ++row) {
+        QModelIndex index = model->index(row, 0); // 假设第0列存储复选框状态
+        if (index.isValid()) {
+            // 设置所有项的选中状态
+            model->setData(index,
+                           checked ? Qt::Checked : Qt::Unchecked,
+                           Qt::CheckStateRole);
+        }
+    }
 }

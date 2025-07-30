@@ -12,6 +12,7 @@
 #include <QHash>
 #include <QVariant>
 #include<QMouseEvent>
+#include"projectlistmodel.h"
 class ProjectDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
@@ -27,6 +28,14 @@ public:
 
     // 提供项的大小提示
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override ;
+
+    void setModel(ProjectListModel*model);
+signals:
+    void singleCheckedChange(bool checked);
+public slots:
+    void checkAllchanged(bool checked);
+private:
+    ProjectListModel*model;
 };
 
 #endif // PROJECTDELEGATE_H

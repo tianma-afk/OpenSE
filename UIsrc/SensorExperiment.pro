@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     clicklabel.cpp \
+    headwidget.cpp \
     main.cpp \
     mainwindow.cpp \
     projectdelegate.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     clicklabel.h \
+    headwidget.h \
     mainwindow.h \
     projectdelegate.h \
     projectlistmodel.h \

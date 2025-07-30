@@ -1,16 +1,23 @@
-QWidget #project_top {
+QWidget#project_top {
     background-color: #9abf3a;
 }
 
-QWidget #project_body {
+QWidget#project_body {
     background-color: #e6e6e6;
 }
 
-QWidget #project_bottom {
+QWidget#project_bottom {
     background-color: #f0f0f0;
 }
 
-QLabel {
+HeadWidget#project_body_head{
+    border:2px solid #c0c8b0;
+    border-radius: 8px;
+    background-color:#f7f7f7;
+    color:#53548f
+}
+
+QLabel#project_top {
     width: 20px;
     border-radius: 8px;
     color: #f0faf5;
@@ -18,7 +25,6 @@ QLabel {
     font-size: 20px;
     font-family: "Microsoft YaHei";
 }
-
 
 
 QPushButton {

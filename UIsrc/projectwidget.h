@@ -7,6 +7,8 @@
 #include<QHBoxLayout>
 #include<QLabel>
 #include<QListView>
+#include<QCheckBox>
+#include"headwidget.h"
 class ProjectWidget : public QWidget
 {
     Q_OBJECT
@@ -27,6 +29,7 @@ private:
     QPushButton *removeProjectBtn;
 
     QVBoxLayout *bodyVLayout;
+    HeadWidget *headWidget;
     QListView *listView;
 
     void initialUI();

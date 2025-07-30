@@ -17,10 +17,12 @@ public:
 
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
+    int getCheckedNum()const;
 private:
     int itemCount;
     mutable QHash<int, bool> checkedItems; // 存储复选框的状态
     QVector<QString> titles; // 存储标题文本
+    int checkedNum=0;
 };
 
 #endif // PROJECTLISTMODEL_H

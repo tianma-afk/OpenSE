@@ -2,12 +2,14 @@
 #define PROJECTLISTMODEL_H
 
 #include <QAbstractListModel>
-
+#include"projectdata.h"
 class ProjectListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    ProjectListModel(int numItems, QObject* parent = nullptr);
+    ProjectListModel(const QVector<ProjectData>datas, QObject* parent = nullptr);
+
+    void addProjectData(const ProjectData&data);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
@@ -18,10 +20,12 @@ public:
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     int getCheckedNum()const;
+
+    QVariant getProjectData(const QModelIndex& index,const QString&tag)const ;
 private:
     int itemCount;
     mutable QHash<int, bool> checkedItems; // 存储复选框的状态
-    QVector<QString> titles; // 存储标题文本
+    QVector<ProjectData> datas;
     int checkedNum=0;
 };
 

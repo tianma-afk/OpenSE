@@ -59,11 +59,14 @@ void ProjectWidget::initialUI()
 
 void ProjectWidget::initialData()
 {
-    auto insertCount = 10;// 构造展示10条数据
+    QString path="D:\\SEProject\\";
+    QVector<ProjectData> datas;
+    ProjectData data("task_1");
+    data.setFilePath(path);
+    datas.push_back(data);
     ProjectDelegate* delegate = new ProjectDelegate(listView);
 
-
-    ProjectListModel *model=new ProjectListModel(insertCount);
+    ProjectListModel *model=new ProjectListModel(datas);
     listView->setModel(model);
     delegate->setModel(model);
 

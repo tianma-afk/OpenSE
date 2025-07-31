@@ -13,6 +13,7 @@ SOURCES += \
     headwidget.cpp \
     main.cpp \
     mainwindow.cpp \
+    projectdata.cpp \
     projectdelegate.cpp \
     projectlistmodel.cpp \
     projectwidget.cpp
@@ -21,6 +22,7 @@ HEADERS += \
     clicklabel.h \
     headwidget.h \
     mainwindow.h \
+    projectdata.h \
     projectdelegate.h \
     projectlistmodel.h \
     projectwidget.h

@@ -38,13 +38,13 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
 
     // 绘制文本
     QRect nameTextRect = option.rect.adjusted(checkboxRect.width() + 10, 0, - 200, 0);
-    painter->drawText(nameTextRect, Qt::AlignVCenter, index.data().toString());
+    painter->drawText(nameTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"projectName").toString());
 
     QRect createTimeTextRect = option.rect.adjusted(option.rect.right()-300, 0, -100, 0);
-    painter->drawText(createTimeTextRect, Qt::AlignVCenter, index.data().toString());
+    painter->drawText(createTimeTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"createTime").toString());
 
     QRect modifyTimeTextRect = option.rect.adjusted(option.rect.right()-100, 0, 0, 0);
-    painter->drawText(modifyTimeTextRect, Qt::AlignVCenter, index.data().toString());
+    painter->drawText(modifyTimeTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"modifyTime").toString());
 
     painter->restore();
 }

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include"projectwidget.h"
+#include"appinventorwidget.h"
 #include"clicklabel.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,18 +26,24 @@ private:
     ProjectWidget *projectWidget=nullptr;
     ClickLabel *githubLabel;
     QWidget *SPHelper=nullptr;
-
+    /*AppInventorWidget*/QWidget*inventor=nullptr;
     //状态
     bool isSPHelperHidden=true;
-
+    bool isInventorHidden=true;
     //菜单栏
     void createMenu();
 
     //主页面
     void initialWidget();
 
+
+    //其他函数
+    void floatWidget(QWidget*widget,bool isToFloat);
+    void openProject();
+
 private slots:
     //菜单栏
+    void onMenuMyProjectsTriggered();
     void onMenuSerialPortTriggered();
 
 

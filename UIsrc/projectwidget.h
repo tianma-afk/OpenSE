@@ -16,7 +16,7 @@ public:
     explicit ProjectWidget(QWidget *parent = nullptr);
 
 signals:
-
+    void openProject();
 private:
     QVBoxLayout *vLayout;
     QWidget *topWidget;
@@ -34,6 +34,7 @@ private:
 
     void initialUI();
     void initialData();
+
 };
 
 #endif // PROJECTWIDGET_H

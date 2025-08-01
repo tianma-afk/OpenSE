@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    appinventorwidget.cpp \
     clicklabel.cpp \
     headwidget.cpp \
     main.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
     projectwidget.cpp
 
 HEADERS += \
+    appinventorwidget.h \
     clicklabel.h \
     headwidget.h \
     mainwindow.h \

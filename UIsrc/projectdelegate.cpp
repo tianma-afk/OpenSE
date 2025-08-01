@@ -26,7 +26,7 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
     // 根据是否有鼠标悬停，绘制高亮背景
     if (option.state & QStyle::State_MouseOver) {
         QRect highlightRect = option.rect;
-        painter->fillRect(highlightRect, option.palette.highlight());
+        painter->fillRect(highlightRect, QColor(255, 240, 176));
     }
 
     // 绘制复选框
@@ -40,10 +40,10 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
     QRect nameTextRect = option.rect.adjusted(checkboxRect.width() + 10, 0, - 200, 0);
     painter->drawText(nameTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"projectName").toString());
 
-    QRect createTimeTextRect = option.rect.adjusted(option.rect.right()-300, 0, -100, 0);
+    QRect createTimeTextRect = option.rect.adjusted(option.rect.right()-350, 0, -150, 0);
     painter->drawText(createTimeTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"createTime").toString());
 
-    QRect modifyTimeTextRect = option.rect.adjusted(option.rect.right()-100, 0, 0, 0);
+    QRect modifyTimeTextRect = option.rect.adjusted(option.rect.right()-150, 0, 0, 0);
     painter->drawText(modifyTimeTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"modifyTime").toString());
 
     painter->restore();
@@ -53,13 +53,12 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
 bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index)  {
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* mouseEvent = (QMouseEvent*)event;
-        // QRect buttonRect = QRect(option.rect.right() - 80, option.rect.y() + 5, 70, option.rect.height() - 10);
+        qDebug()<<"单击";
         QRect checkboxRect = QRect(option.rect.x() + 5, option.rect.y() + 5, option.rect.height() - 10, option.rect.height() - 10);
-
-        /*if (buttonRect.contains(mouseEvent->pos())) {
-            // 按钮被点击
-            qDebug() << "按钮点击，项：" << index.row();
-        } else */if (checkboxRect.contains(mouseEvent->pos())) {
+        QRect projectNameRect=QRect(checkboxRect.width() + 10, 0, option.rect.right()-checkboxRect.width(), option.rect.height());
+        qDebug()<<projectNameRect;
+        qDebug()<<mouseEvent->pos();
+        if (checkboxRect.contains(mouseEvent->pos())) {
             // 切换复选框状态
             bool checked = !index.data(Qt::CheckStateRole).toBool();
             model->setData(index, checked ? Qt::Checked : Qt::Unchecked, Qt::CheckStateRole);
@@ -68,7 +67,10 @@ bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, cons
             }else{
                 emit singleCheckedChange(false);
             }
-            // qDebug() << "勾选checkbox，项：" << index.row();
+        }else if(projectNameRect.contains(mouseEvent->pos())){
+            //打开项目
+            qDebug()<<"dasdasdasdasd";
+            emit openProject();
         }
         return true; // 事件已处理
     }

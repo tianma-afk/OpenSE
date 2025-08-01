@@ -10,6 +10,18 @@ QWidget#project_bottom {
     background-color: #f0f0f0;
 }
 
+QWidget#SPHelper{
+    background-color: #000000;
+}
+
+QWidget#inventor{
+    background-color: #000000;
+}
+
+AppInventorWidget#inventor{
+    background-color: #000000;
+}
+
 HeadWidget#project_body_head{
     border:2px solid #c0c8b0;
     border-radius: 8px;

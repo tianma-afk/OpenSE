@@ -74,6 +74,7 @@ void ProjectWidget::initialData()
 
     connect(this->headWidget,&HeadWidget::checkedChanged,delegate,&ProjectDelegate::checkAllchanged);
     connect(delegate,&ProjectDelegate::singleCheckedChange,this->headWidget,&HeadWidget::checkStateChangeForSingle);
+    connect(delegate,&ProjectDelegate::openProject,[=](){emit this->openProject();});
     // 优化性能
     listView->setUniformItemSizes(true);
     listView->setSelectionMode(QAbstractItemView::SingleSelection);

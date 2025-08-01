@@ -32,6 +32,7 @@ public:
     void setModel(ProjectListModel*model);
 signals:
     void singleCheckedChange(bool checked);
+    void openProject();
 public slots:
     void checkAllchanged(bool checked);
 private:

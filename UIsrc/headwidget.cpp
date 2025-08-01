@@ -44,10 +44,10 @@ void HeadWidget::paintEvent(QPaintEvent *event)
     QRect nameTextRect = this->rect().adjusted(checkboxRect.width() + 10, 0, - 200, 0);
     painter.drawText(nameTextRect, Qt::AlignVCenter, "项目名");
 
-    QRect createTimeTextRect = this->rect().adjusted(this->rect().right()-300, 0, -100, 0);
+    QRect createTimeTextRect = this->rect().adjusted(this->rect().right()-300, 0, -150, 0);
     painter.drawText(createTimeTextRect, Qt::AlignVCenter, "创建时间");
 
-    QRect modifyTimeTextRect = this->rect().adjusted(this->rect().right()-100, 0, 0, 0);
+    QRect modifyTimeTextRect = this->rect().adjusted(this->rect().right()-100, 0, -50, 0);
     painter.drawText(modifyTimeTextRect, Qt::AlignVCenter, "修改时间");
     painter.restore();
 

@@ -5,11 +5,17 @@
 #include <QDebug>
 #include<QFileDialog>
 #include<QPropertyAnimation>
+#include<QApplication>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    // 设置窗口固定大小为屏幕尺寸
+    QRect mainScreenGeometry = QGuiApplication::primaryScreen()->availableGeometry();
+    QSize screenSize=mainScreenGeometry.size();
+    setMinimumSize(screenSize);
+
     createMenu();
     initialWidget();
 }
@@ -58,15 +64,14 @@ void MainWindow::initialWidget()
 
 void MainWindow::floatWidget(QWidget *widget,bool isToFloat)
 {
-    // widget=(AppInventorWidget*)widget;
     if(isToFloat==true){
         int statusBarHeight = statusBar()->height();
         int menuBarHeight = menuBar()->height();
         int windowHeight = this->height();
 
         // 设置 widget的初始位置和大小
-        widget->setGeometry(0, windowHeight - statusBarHeight, this->width(),0);
-         widget->show();
+        widget->setGeometry(0, windowHeight - statusBarHeight, this->width(),10);
+        widget->show();
 
         // 创建并启动动画，让部件向上移动到菜单栏下方
         QPropertyAnimation *animation = new QPropertyAnimation( widget, "geometry");
@@ -95,7 +100,7 @@ void MainWindow::openProject()
 {
     if(this->inventor==nullptr)
     {
-        this->inventor=new /*AppInventorWidget*/QWidget(this);
+        this->inventor=new AppInventorWidget(this);
         this->inventor->setObjectName("inventor");
         this->inventor->hide();
     }
@@ -105,8 +110,6 @@ void MainWindow::openProject()
         this->statusBar()->showMessage("打开项目");
         this->isInventorHidden=false;
         this->floatWidget(this->inventor,true);
-        qDebug()<<this->inventor->rect();
-        this->inventor->show();
     }else{
         this->statusBar()->showMessage("关闭项目");
         this->isInventorHidden=true;
@@ -118,9 +121,11 @@ void MainWindow::onMenuMyProjectsTriggered()
 {
     this->statusBar()->showMessage("我的项目");
     if(this->isSPHelperHidden==false){
+        this->isSPHelperHidden=true;
         this->floatWidget(this->SPHelper,false);
     }
     if(this->isInventorHidden==false){
+        this->isInventorHidden=true;
         this->floatWidget(this->inventor,false);
     }
 }
@@ -140,7 +145,6 @@ void MainWindow::onMenuSerialPortTriggered()
         this->statusBar()->showMessage("串口助手打开");
         this->isSPHelperHidden=false;
         this->floatWidget(this->SPHelper,true);
-        qDebug()<<this->SPHelper->rect();
     }else{
         this->statusBar()->showMessage("串口助手关闭");
         this->isSPHelperHidden=true;

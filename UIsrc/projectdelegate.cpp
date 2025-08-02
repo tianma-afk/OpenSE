@@ -53,11 +53,8 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
 bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index)  {
     if (event->type() == QEvent::MouseButtonRelease) {
         QMouseEvent* mouseEvent = (QMouseEvent*)event;
-        qDebug()<<"单击";
         QRect checkboxRect = QRect(option.rect.x() + 5, option.rect.y() + 5, option.rect.height() - 10, option.rect.height() - 10);
         QRect projectNameRect=QRect(checkboxRect.width() + 10, 0, option.rect.right()-checkboxRect.width(), option.rect.height());
-        qDebug()<<projectNameRect;
-        qDebug()<<mouseEvent->pos();
         if (checkboxRect.contains(mouseEvent->pos())) {
             // 切换复选框状态
             bool checked = !index.data(Qt::CheckStateRole).toBool();
@@ -69,7 +66,6 @@ bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, cons
             }
         }else if(projectNameRect.contains(mouseEvent->pos())){
             //打开项目
-            qDebug()<<"dasdasdasdasd";
             emit openProject();
         }
         return true; // 事件已处理

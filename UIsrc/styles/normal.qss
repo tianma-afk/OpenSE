@@ -1,3 +1,4 @@
+/*项目界面*/
 QWidget#project_top {
     background-color: #9abf3a;
 }
@@ -10,18 +11,6 @@ QWidget#project_bottom {
     background-color: #f0f0f0;
 }
 
-QWidget#SPHelper{
-    background-color: #000000;
-}
-
-QWidget#inventor{
-    background-color: #000000;
-}
-
-AppInventorWidget#inventor{
-    background-color: #000000;
-}
-
 HeadWidget#project_body_head{
     border:2px solid #c0c8b0;
     border-radius: 8px;
@@ -31,13 +20,11 @@ HeadWidget#project_body_head{
 
 QLabel#project_top {
     width: 20px;
-    border-radius: 8px;
     color: #f0faf5;
     font-weight: bold;
     font-size: 20px;
     font-family: "Microsoft YaHei";
 }
-
 
 QPushButton {
     background-color: #4285f4; /* 蓝色背景 */
@@ -48,19 +35,38 @@ QPushButton {
     font-size: 14px;          /* 字体大小 */
 }
 
-/* 悬停状态（鼠标放在按钮上） */
 QPushButton:hover {
     background-color: #3367d6; /* 深一点的蓝色 */
 }
 
-/* 点击状态（鼠标按下时） */
 QPushButton:pressed {
     background-color: #2850b8; /* 更深的蓝色 */
     padding: 9px 15px 7px 17px; /* 模拟按下效果 */
 }
 
-/* 禁用状态 */
 QPushButton:disabled {
     background-color: #cccccc; /* 灰色背景 */
     color: #999999;            /* 灰色文字 */
+}
+
+/*串口调试助手*/
+QWidget#SPHelper{
+    background-color: #000000;
+}
+
+/*APP开发界面*/
+AppInventorWidget#inventor{
+    background-color: #eaeaea;
+}
+
+QWidget#inventor_top{
+    background-color: #8fc202;
+}
+
+QLabel#inventor_headName{
+    width: 20px;
+    color: #f0faf5;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Microsoft YaHei";
 }

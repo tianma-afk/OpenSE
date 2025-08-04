@@ -46,6 +46,70 @@ void AppInventorWidget::initialUI()
 
     this->bodyHLayout=new QHBoxLayout(this->bodyWidget);
     this->bodyWidget->setLayout(this->bodyHLayout);
+
+    this->component=new QWidget(this->bodyWidget);
+    this->bodyHLayout->addWidget(this->component,24);
+    this->component->setObjectName("inventor_component");
+    this->initialComponent();
+
+    this->workspace=new QWidget(this->bodyWidget);
+    this->bodyHLayout->addWidget(this->workspace,83);
+    this->workspace->setObjectName("inventor_workspace");
+    this->initialWorkspace();
+
+    this->list=new QWidget(this->bodyWidget);
+    this->bodyHLayout->addWidget(this->list,22);
+    this->list->setObjectName("inventor_list");
+    this->initialList();
+
+    this->property=new QWidget(this->bodyWidget);
+    this->bodyHLayout->addWidget(this->property,22);
+    this->property->setObjectName("inventor_property");
+    this->initialProperty();
+}
+
+void AppInventorWidget::initialComponent()
+{
+    this->comVlayout=new QVBoxLayout(this->component);
+    this->component->setLayout(this->comVlayout);
+
+    this->componentName=new QLabel(this->component);
+    this->comVlayout->addWidget(this->componentName);
+    this->componentName->setText("组件面板");
+    this->componentName->setObjectName("inventor_body_nameLabel");
+}
+
+void AppInventorWidget::initialWorkspace()
+{
+    this->wsVlayout=new QVBoxLayout(this->workspace);
+    this->workspace->setLayout(this->wsVlayout);
+
+    this->workspaceName=new QLabel(this->workspace);
+    this->wsVlayout->addWidget(this->workspaceName);
+    this->workspaceName->setText("工作区");
+    this->workspaceName->setObjectName("inventor_body_nameLabel");
+}
+
+void AppInventorWidget::initialList()
+{
+    this->listVlayout=new QVBoxLayout(this->list);
+    this->list->setLayout(this->listVlayout);
+
+    this->listName=new QLabel(this->list);
+    this->listVlayout->addWidget(this->listName);
+    this->listName->setText("组件列表");
+    this->listName->setObjectName("inventor_body_nameLabel");
+}
+
+void AppInventorWidget::initialProperty()
+{
+    this->proVlayout=new QVBoxLayout(this->property);
+    this->property->setLayout(this->proVlayout);
+
+    this->propertyName=new QLabel(this->property);
+    this->proVlayout->addWidget(this->propertyName);
+    this->propertyName->setText("属性面板");
+    this->propertyName->setObjectName("inventor_body_nameLabel");
 }
 
 void AppInventorWidget::initialData()

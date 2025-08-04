@@ -70,3 +70,27 @@ QLabel#inventor_headName{
     font-size: 20px;
     font-family: "Microsoft YaHei";
 }
+
+QWidget#inventor_component{
+    background-color: #cbdca9;
+}
+
+QWidget#inventor_workspace{
+    background-color: #cbdca9;
+}
+
+QWidget#inventor_list{
+    background-color: #cbdca9;
+}
+
+QWidget#inventor_property{
+    background-color: #cbdca9;
+}
+
+QWidget#inventor_body_nameLabel{
+     background-color: #cbdca9;
+     color: #64665f;
+     font-weight: bold;
+     font-size: 16px;
+     font-family: "Microsoft YaHei";
+}

@@ -27,13 +27,30 @@ private:
     //主体
     QWidget*bodyWidget;
     QHBoxLayout*bodyHLayout;
+
     QWidget*component;
+    QVBoxLayout*comVlayout;
+    QLabel*componentName;
+
     QWidget*workspace;
+    QVBoxLayout*wsVlayout;
+    QLabel*workspaceName;
+
     QWidget*list;
+    QVBoxLayout*listVlayout;
+    QLabel*listName;
+
     QWidget*property;
+    QVBoxLayout*proVlayout;
+    QLabel*propertyName;
 
     void initialUI();
+    void initialComponent();
+    void initialWorkspace();
+    void initialList();
+    void initialProperty();
     void initialData();
+
 signals:
 };
 

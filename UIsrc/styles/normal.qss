@@ -72,19 +72,44 @@ QLabel#inventor_headName{
 }
 
 QWidget#inventor_component{
-    background-color: #cbdca9;
+    background-color: #e9e9e9;
+}
+
+ComponentPanel#inventor_body_cp{
+    background-color:#f7f9f2;
+}
+
+QListView#componentpanel_listview {
+    background-color:#f7f9f2;
+}
+
+QListView#componentpanel_listview::item {
+    background-color:#eef2e0;
+    border-bottom:2px solid #d2d2d2;
 }
 
 QWidget#inventor_workspace{
-    background-color: #cbdca9;
+    background-color: #e9e9e9;
+}
+
+WorkSpace#inventor_body_ws{
+    background-color:#f7f9f2;
 }
 
 QWidget#inventor_list{
-    background-color: #cbdca9;
+    background-color: #e9e9e9;
+}
+
+ComponentList#inventor_body_cl{
+    background-color:#f7f9f2;
 }
 
 QWidget#inventor_property{
-    background-color: #cbdca9;
+    background-color: #e9e9e9;
+}
+
+PropertyPanel#inventor_body_pp{
+    background-color:#f7f9f2;
 }
 
 QWidget#inventor_body_nameLabel{

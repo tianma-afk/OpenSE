@@ -54,7 +54,6 @@ void ProjectWidget::initialUI()
     this->listView = new QListView(this->bodyWidget);
     this->bodyVLayout->addWidget(listView,1);
 
-
 }
 
 void ProjectWidget::initialData()
@@ -64,8 +63,8 @@ void ProjectWidget::initialData()
     ProjectData data("task_1");
     data.setFilePath(path);
     datas.push_back(data);
-    ProjectDelegate* delegate = new ProjectDelegate(listView);
 
+    ProjectDelegate* delegate = new ProjectDelegate(listView);
     ProjectListModel *model=new ProjectListModel(datas);
     listView->setModel(model);
     delegate->setModel(model);

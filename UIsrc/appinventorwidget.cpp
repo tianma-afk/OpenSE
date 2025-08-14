@@ -72,44 +72,74 @@ void AppInventorWidget::initialComponent()
 {
     this->comVlayout=new QVBoxLayout(this->component);
     this->component->setLayout(this->comVlayout);
+    this->comVlayout->setSpacing(0);
 
     this->componentName=new QLabel(this->component);
+    this->componentName->setFixedHeight(35);
     this->comVlayout->addWidget(this->componentName);
     this->componentName->setText("组件面板");
     this->componentName->setObjectName("inventor_body_nameLabel");
+
+    this->cp=new ComponentPanel(this->component);
+    this->comVlayout->addWidget(this->cp);
+    this->cp->setObjectName("inventor_body_cp");
 }
 
 void AppInventorWidget::initialWorkspace()
 {
     this->wsVlayout=new QVBoxLayout(this->workspace);
     this->workspace->setLayout(this->wsVlayout);
+    this->wsVlayout->setSpacing(0);
 
     this->workspaceName=new QLabel(this->workspace);
+    this->workspaceName->setFixedHeight(35);
     this->wsVlayout->addWidget(this->workspaceName);
     this->workspaceName->setText("工作区");
     this->workspaceName->setObjectName("inventor_body_nameLabel");
+
+    this->ws=new WorkSpace(this->workspace);
+    this->ws->setFixedHeight(750);
+    this->wsVlayout->addWidget(this->ws);
+    this->ws->setObjectName("inventor_body_ws");
+
+    this->wsVlayout->addStretch();
 }
 
 void AppInventorWidget::initialList()
 {
     this->listVlayout=new QVBoxLayout(this->list);
     this->list->setLayout(this->listVlayout);
+    this->listVlayout->setSpacing(0);
 
     this->listName=new QLabel(this->list);
+    this->listName->setFixedHeight(35);
     this->listVlayout->addWidget(this->listName);
     this->listName->setText("组件列表");
     this->listName->setObjectName("inventor_body_nameLabel");
+
+    this->cl=new ComponentList(this->list);
+    this->cl->setFixedHeight(500);
+    this->listVlayout->addWidget(this->cl);
+    this->cl->setObjectName("inventor_body_cl");
+
+    this->listVlayout->addStretch();
 }
 
 void AppInventorWidget::initialProperty()
 {
     this->proVlayout=new QVBoxLayout(this->property);
     this->property->setLayout(this->proVlayout);
+    this->proVlayout->setSpacing(0);
 
     this->propertyName=new QLabel(this->property);
+    this->propertyName->setFixedHeight(35);
     this->proVlayout->addWidget(this->propertyName);
     this->propertyName->setText("属性面板");
     this->propertyName->setObjectName("inventor_body_nameLabel");
+
+    this->pp=new PropertyPanel(this->property);
+    this->proVlayout->addWidget(this->pp);
+    this->pp->setObjectName("inventor_body_pp");
 }
 
 void AppInventorWidget::initialData()

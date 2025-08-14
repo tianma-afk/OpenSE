@@ -4,9 +4,6 @@ ProjectDelegate::ProjectDelegate(QObject* parent): QStyledItemDelegate(parent) {
 
 // 绘制列表项
 void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const{
-    // QStyleOptionButton buttonOption;
-    // QRect buttonRect = QRect(option.rect.right() - 80, option.rect.y() + 1, 78, option.rect.height() - 2);
-    // buttonOption.rect = buttonRect;
 
     QStyleOptionButton checkboxOption;
     QRect checkboxRect = QRect(option.rect.x() + 5, option.rect.y() + 5, option.rect.height() - 10, option.rect.height() - 10);
@@ -31,10 +28,6 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
 
     // 绘制复选框
     QApplication::style()->drawControl(QStyle::CE_CheckBox, &checkboxOption, painter);
-
-    // // 绘制按钮
-    // buttonOption.text = "按钮";
-    // QApplication::style()->drawControl(QStyle::CE_PushButton, &buttonOption, painter);
 
     // 绘制文本
     QRect nameTextRect = option.rect.adjusted(checkboxRect.width() + 10, 0, - 200, 0);

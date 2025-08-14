@@ -22,10 +22,11 @@ public:
     int getCheckedNum()const;
 
     QVariant getProjectData(const QModelIndex& index,const QString&tag)const ;
+    QVector<ProjectData> datas;
 private:
     int itemCount;
     mutable QHash<int, bool> checkedItems; // 存储复选框的状态
-    QVector<ProjectData> datas;
+
     int checkedNum=0;
 };
 

@@ -74,9 +74,9 @@ QVariant ProjectListModel::getProjectData(const QModelIndex &index, const QStrin
     if(tag=="projectName"){
         return datas.at(index.row()).projectName;
     }else if(tag=="createTime"){
-        return datas.at(index.row()).createTime.toString("yyyy年M月d日H时m分");
+        return datas.at(index.row()).createTime.toString("yyyy年M月d日H:m");
     }else if(tag=="modifyTime"){
-        return datas.at(index.row()).modifyTime.toString("yyyy年M月d日H时m分");
+        return datas.at(index.row()).modifyTime.toString("yyyy年M月d日H:m");
     }else{
         return QVariant();
     }

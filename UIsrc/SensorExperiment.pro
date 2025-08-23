@@ -11,9 +11,11 @@ CONFIG += c++17
 SOURCES += \
     appinventorwidget.cpp \
     clicklabel.cpp \
+    componentdelegate.cpp \
     componentitem.cpp \
     componentlist.cpp \
     componentmenuitem.cpp \
+    componentmodel.cpp \
     componentpanel.cpp \
     componentpaneldelegate.cpp \
     componentpanelmodel.cpp \
@@ -25,14 +27,17 @@ SOURCES += \
     projectlistmodel.cpp \
     projectwidget.cpp \
     propertypanel.cpp \
-    workspace.cpp
+    workspace.cpp \
+    wsscene.cpp
 
 HEADERS += \
     appinventorwidget.h \
     clicklabel.h \
+    componentdelegate.h \
     componentitem.h \
     componentlist.h \
     componentmenuitem.h \
+    componentmodel.h \
     componentpanel.h \
     componentpaneldelegate.h \
     componentpanelmodel.h \
@@ -43,7 +48,8 @@ HEADERS += \
     projectlistmodel.h \
     projectwidget.h \
     propertypanel.h \
-    workspace.h
+    workspace.h \
+    wsscene.h
 
 FORMS += \
     mainwindow.ui

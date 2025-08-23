@@ -1,28 +1,14 @@
 #ifndef COMPONENTITEM_H
 #define COMPONENTITEM_H
 
-#include <QWidget>
-#include <QPropertyAnimation>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QFrame>
-#include <QMouseEvent>
-#include<QPixmap>
-class ComponentItem : public QWidget
+#include<QIcon>
+#include<QString>
+class ComponentItem
 {
-    Q_OBJECT
 public:
-    explicit ComponentItem(QWidget *parent = nullptr);
-    const static int height=20;
-
-    void setTitle(const QString title);
-    void setPicmap(const QPixmap pic);
-protected:
-    void mousePressEvent(QMouseEvent *event) override;
-private:
-    QString title;
-    QPixmap pic;
-signals:
+    ComponentItem(const QString name,const QIcon icon,const QString description);
+    QString name;
+    QIcon icon;
+    QString description;
 };
-
 #endif // COMPONENTITEM_H

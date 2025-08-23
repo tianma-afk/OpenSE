@@ -3,7 +3,7 @@
 
 #include <QStyledItemDelegate>
 #include <QModelIndex>
-#include<componentpanelmodel.h>
+#include"componentpanelmodel.h"
 class ComponentPanelDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
@@ -15,14 +15,6 @@ public:
                    const QModelIndex &index) const override;
 
     void setModel(ComponentPanelModel*model);
-
-    // 处理鼠标事件
-    bool editorEvent(QEvent *event, QAbstractItemModel *model,
-                     const QStyleOptionViewItem &option, const QModelIndex &index) override;
-
-signals:
-    // 当项目被点击时发出信号
-    void itemClicked(const QModelIndex &index);
 private:
     ComponentPanelModel*model;
 };

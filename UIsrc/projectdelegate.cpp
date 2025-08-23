@@ -17,9 +17,6 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
 
     painter->save();
 
-    if (option.state & QStyle::State_MouseOver) {
-        painter->fillRect(option.rect, option.palette.light());
-    }
     // 根据是否有鼠标悬停，绘制高亮背景
     if (option.state & QStyle::State_MouseOver) {
         QRect highlightRect = option.rect;

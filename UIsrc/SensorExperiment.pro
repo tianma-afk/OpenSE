@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     appinventorwidget.cpp \
     clicklabel.cpp \
+    component.cpp \
     componentdelegate.cpp \
     componentitem.cpp \
     componentlist.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 HEADERS += \
     appinventorwidget.h \
     clicklabel.h \
+    component.h \
     componentdelegate.h \
     componentitem.h \
     componentlist.h \

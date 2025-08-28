@@ -68,61 +68,15 @@ void WorkSpace::dragMoveEvent(QDragMoveEvent *event)
 void WorkSpace::dropEvent(QDropEvent *event) {
     QString componentType = event->mimeData()->text();
     if (componentType.isEmpty()) return;
-
     // 将视图坐标（鼠标位置）转换为场景坐标
     QPointF scenePos = this->view->mapToScene(event->position().toPoint());
-    qDebug()<<scenePos;
     // 检查是否在手机屏幕区域内
     if (this->screenRect.contains(scenePos)) {
         // 创建组件并添加到场景
         Component *item = new Component(componentType);
         item->setPos(scenePos); // 放置在拖拽结束位置
         this->scene->addItem(item);
+        emit signal_addItemInList(nullptr,item->item);
     }
-
     event->acceptProposedAction();
-}
-
-// 组件项构造函数：根据类型初始化样式
-WorkSpace::Component::Component(const QString &type) : type(type) {
-    setFlag(QGraphicsItem::ItemIsMovable);    // 允许移动
-    setFlag(QGraphicsItem::ItemIsSelectable); // 允许选中
-
-    // 根据组件类型设置样式
-    if (type == "button") {
-        size = QSizeF(100, 30);
-        color = Qt::green;
-        text = "按钮";
-    } else if (type == "label") {
-        size = QSizeF(120, 25);
-        color = Qt::yellow;
-        text = "文本标签";
-    } else if (type == "textbox") {
-        size = QSizeF(150, 30);
-        color = Qt::white;
-        text = "输入框";
-    } else {
-        size = QSizeF(80, 80);
-        color = Qt::gray;
-        text = "组件";
-    }
-}
-
-// 定义组件边界（用于碰撞检测和绘制范围）
-QRectF WorkSpace::Component::boundingRect() const {
-    return QRectF(0, 0, size.width(), size.height());
-}
-
-// 绘制组件外观
-void WorkSpace::Component::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
-    qDebug()<<"绘制组件";
-    // 绘制组件背景（圆角矩形）
-    painter->setPen(Qt::black); // 边框色
-    painter->setBrush(color); // 背景色
-    painter->drawRoundedRect(boundingRect(), 5, 5); // 圆角
-
-    // 绘制组件文本（居中）
-    painter->drawText(boundingRect(), Qt::AlignCenter, text);
 }

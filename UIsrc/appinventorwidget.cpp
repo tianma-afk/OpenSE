@@ -145,4 +145,5 @@ void AppInventorWidget::initialProperty()
 void AppInventorWidget::initialData()
 {
     this->nameLabel->setText("text");
+    connect(this->ws,&WorkSpace::signal_addItemInList,this->cl,&ComponentList::on_addItemInList);
 }

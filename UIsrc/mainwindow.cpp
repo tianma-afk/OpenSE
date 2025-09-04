@@ -37,7 +37,7 @@ void MainWindow::createMenu() {
 
     //构建菜单
     QMenu *buildMenu = menuBar->addMenu("构建");
-    buildMenu->addAction("生成app", this, [=]() {});
+    buildMenu->addAction("生成app", this, [=]() {onMenuAppInventorTriggered();});
 
     //串口菜单
     QMenu*serialPortMenu=menuBar->addMenu("串口");
@@ -151,5 +151,14 @@ void MainWindow::onMenuSerialPortTriggered()
         this->floatWidget(this->SPHelper,false);
     }
 }
+
+void MainWindow::onMenuAppInventorTriggered()
+{
+    connect(qobject_cast<AppInventorWidget*>(inventor),&AppInventorWidget::signal_inventOutput,[=](const QString &output){this->statusBar()->showMessage(output);});
+    if(this->inventor!=nullptr){
+        qobject_cast<AppInventorWidget*>(inventor)->appInvent();
+    }
+}
+
 
 

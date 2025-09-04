@@ -45,9 +45,8 @@ private slots:
     //菜单栏
     void onMenuMyProjectsTriggered();
     void onMenuSerialPortTriggered();
-
+    void onMenuAppInventorTriggered();
 
     //状态栏
-
 };
 #endif // MAINWINDOW_H

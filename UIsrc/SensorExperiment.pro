@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     appinventorwidget.cpp \
     clicklabel.cpp \
+    coder.cpp \
     component.cpp \
     componentdelegate.cpp \
     componentitem.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
     componentpaneldelegate.cpp \
     componentpanelmodel.cpp \
     headwidget.cpp \
+    inventworker.cpp \
     main.cpp \
     mainwindow.cpp \
     projectdata.cpp \
@@ -34,6 +36,7 @@ SOURCES += \
 HEADERS += \
     appinventorwidget.h \
     clicklabel.h \
+    coder.h \
     component.h \
     componentdelegate.h \
     componentitem.h \
@@ -44,6 +47,7 @@ HEADERS += \
     componentpaneldelegate.h \
     componentpanelmodel.h \
     headwidget.h \
+    inventworker.h \
     mainwindow.h \
     projectdata.h \
     projectdelegate.h \

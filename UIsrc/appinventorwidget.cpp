@@ -8,6 +8,11 @@ AppInventorWidget::AppInventorWidget(QWidget *parent)
     this->initialData();
 }
 
+void AppInventorWidget::appInvent()
+{
+    inventThread->start();
+}
+
 void AppInventorWidget::paintEvent(QPaintEvent *event)
 {
     // 1. 初始化样式选项，关联当前窗口
@@ -145,5 +150,39 @@ void AppInventorWidget::initialProperty()
 void AppInventorWidget::initialData()
 {
     this->nameLabel->setText("text");
+
+    this->coder=new Coder();
+
+    inventThread = new QThread(this);// 初始化线程和工作对象
+    inventWorker = new InventWorker(this);
+    inventWorker->moveToThread(inventThread);// 将工作对象移动到线程
+    // 连接信号槽
+    connect(inventThread, &QThread::started,inventWorker, &InventWorker::startWork);
+    connect(inventWorker, &InventWorker::workDone, inventThread, &QThread::quit);
+    connect(inventWorker, &InventWorker::workDone, inventWorker, &InventWorker::deleteLater);
+    connect(inventThread, &QThread::finished, inventThread, &QThread::deleteLater);
+
+    // 连接命令输出信号
+    connect(inventWorker, &InventWorker::outputReceived, this, &AppInventorWidget::onInventWorkerOutput);
+    connect(inventWorker, &InventWorker::errorOccurred, this, &AppInventorWidget::onInventWorkerError);
+    connect(inventWorker, &InventWorker::finished, this, &AppInventorWidget::onInventWorkerFinished);
+
+
     connect(this->ws,&WorkSpace::signal_addItemInList,this->cl,&ComponentList::on_addItemInList);
+    connect(this->ws,&WorkSpace::signal_addItemInList,this->coder,&Coder::work);
+}
+
+void AppInventorWidget::onInventWorkerOutput(const QString &output)
+{
+    emit signal_inventOutput(output);
+}
+
+void AppInventorWidget::onInventWorkerError(const QString &error)
+{
+    emit signal_inventOutput("错误: " + error);
+}
+
+void AppInventorWidget::onInventWorkerFinished(int exitCode)
+{
+    emit signal_inventOutput(QString("app生成完成，退出码: %1").arg(exitCode));
 }

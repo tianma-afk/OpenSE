@@ -10,12 +10,15 @@
 #include<componentpanel.h>
 #include<componentlist.h>
 #include<propertypanel.h>
+#include<QThread>
+#include"coder.h"
+#include"inventworker.h"
 class AppInventorWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit AppInventorWidget(QWidget *parent = nullptr);
-
+    void appInvent();
 protected:
     void paintEvent(QPaintEvent *event) override;
 
@@ -55,14 +58,23 @@ private:
     QLabel*propertyName;
     PropertyPanel*pp;
 
+    //后端
+    Coder*coder;
+    QThread*inventThread;
+    InventWorker*inventWorker;
+
     void initialUI();
     void initialComponent();
     void initialWorkspace();
     void initialList();
     void initialProperty();
     void initialData();
-
 signals:
+    void signal_inventOutput(const QString &output);
+public slots:
+    void onInventWorkerOutput(const QString &output);
+    void onInventWorkerError(const QString &error);
+    void onInventWorkerFinished(int exitCode);
 };
 
 #endif // APPINVENTORWIDGET_H

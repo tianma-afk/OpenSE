@@ -37,7 +37,7 @@
   <customwidget>
    <class>ProjectWidget</class>
    <extends>QWidget</extends>
-   <header location="global">projectwidget.h</header>
+   <header location="global">gui/projectwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

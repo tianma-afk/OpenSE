@@ -3,7 +3,7 @@
 
 #include <QStyledItemDelegate>
 #include <QModelIndex>
-#include"componentpanelmodel.h"
+#include"gui/componentpanelmodel.h"
 class ComponentPanelDelegate : public QStyledItemDelegate
 {
     Q_OBJECT

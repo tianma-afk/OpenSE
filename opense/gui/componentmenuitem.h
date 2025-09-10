@@ -4,7 +4,7 @@
 #include <QWidget>
 #include<QMouseEvent>
 #include<QStandardItem>
-#include<componentitem.h>
+#include<gui/componentitem.h>
 #include<QLabel>
 #include<QVBoxLayout>
 #include<QListView>

@@ -6,13 +6,13 @@
 #include<QVBoxLayout>
 #include<QHBoxLayout>
 #include<QLabel>
-#include<workspace.h>
-#include<componentpanel.h>
-#include<componentlist.h>
-#include<propertypanel.h>
+#include"gui/workspace.h"
+#include"gui/componentpanel.h"
+#include"gui/componentlist.h"
+#include<gui/propertypanel.h>
 #include<QThread>
-#include"coder.h"
-#include"inventworker.h"
+#include"core/coder.h"
+#include"core/inventworker.h"
 class AppInventorWidget : public QWidget
 {
     Q_OBJECT

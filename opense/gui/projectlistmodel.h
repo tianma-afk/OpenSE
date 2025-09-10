@@ -2,7 +2,7 @@
 #define PROJECTLISTMODEL_H
 
 #include <QAbstractListModel>
-#include"projectdata.h"
+#include"gui/projectdata.h"
 class ProjectListModel : public QAbstractListModel
 {
     Q_OBJECT

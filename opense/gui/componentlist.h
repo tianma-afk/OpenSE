@@ -9,7 +9,7 @@
 #include<QStandardItemModel>
 #include<QStandardItem>
 #include<QVector>
-#include"component.h"
+#include"components/component.h"
 class ComponentList : public QWidget
 {
     Q_OBJECT

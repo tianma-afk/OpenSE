@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QVector>
 #include<QListView>
-#include"componentpaneldelegate.h"
+#include"gui/componentpaneldelegate.h"
 #include"componentmenuitem.h"
 #include"componentpanelmodel.h"
 class ComponentPanel:public QWidget

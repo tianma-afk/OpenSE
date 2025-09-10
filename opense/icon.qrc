@@ -8,9 +8,9 @@
         <file>icons/runAction.svg</file>
         <file>styles/normal.qss</file>
         <file>icons/github.svg</file>
-        <file>icons/button.png</file>
+        <file>icons/Button.png</file>
         <file>icons/help.png</file>
-        <file>icons/label.png</file>
+        <file>icons/TextBox.png</file>
         <file>icons/phone.png</file>
     </qresource>
 </RCC>

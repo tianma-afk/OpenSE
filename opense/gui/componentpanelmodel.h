@@ -2,7 +2,7 @@
 #define COMPONENTPANELMODEL_H
 
 #include <QAbstractListModel>
-#include"componentmenuitem.h"
+#include"gui/componentmenuitem.h"
 class ComponentPanelModel : public QAbstractListModel
 {
     Q_OBJECT

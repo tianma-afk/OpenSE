@@ -8,7 +8,7 @@
 #include<QLabel>
 #include<QListView>
 #include<QCheckBox>
-#include"headwidget.h"
+#include"gui/headwidget.h"
 class ProjectWidget : public QWidget
 {
     Q_OBJECT

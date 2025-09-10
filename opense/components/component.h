@@ -6,12 +6,16 @@
 // 可拖拽的组件项（继承自QGraphicsItem）
 class Component : public QGraphicsItem {
 public:
-    explicit Component(const QString &type);
-
-    // 必须实现的纯虚函数：定义组件边界
-    QRectF boundingRect() const override;
-    // 必须实现的纯虚函数：绘制组件外观
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    virtual ~Component() = default;
+    // 组件类型标识
+    virtual QString componentType() const = 0;
+    // 绘制接口
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget) override = 0;
+    // 边界接口
+    virtual QRectF boundingRect() const override = 0;
+    // 属性操作接口
+    virtual void setProperty(const QString &name, const QVariant &value) = 0;
+    virtual QVariant getProperty(const QString &name) const = 0;
     QStandardItem*item;
     enum Data{
         objName = Qt::DisplayRole, // 真实值：0
@@ -22,5 +26,4 @@ public:
         text = Qt::UserRole + 4     // 真实值：65536 + 4
     };
 };
-
 #endif // COMPONENT_H

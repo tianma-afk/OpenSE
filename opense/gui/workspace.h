@@ -6,7 +6,8 @@
 #include<QGraphicsView>
 #include<QGraphicsItem>
 #include<QHBoxLayout>
-#include"component.h"
+#include"core\componentfactory.h"
+#include<QProcess>
 class WorkSpace : public QWidget
 {
     Q_OBJECT

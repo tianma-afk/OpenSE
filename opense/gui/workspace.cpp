@@ -72,11 +72,18 @@ void WorkSpace::dropEvent(QDropEvent *event) {
     QPointF scenePos = this->view->mapToScene(event->position().toPoint());
     // 检查是否在手机屏幕区域内
     if (this->screenRect.contains(scenePos)) {
-        // 创建组件并添加到场景
-        Component *item = new Component(componentType);
-        item->setPos(scenePos); // 放置在拖拽结束位置
-        this->scene->addItem(item);
-        emit signal_addItemInList(nullptr,item->item);
+        // 关键：通过工厂创建组件，无需知道具体类
+        qDebug()<<"创建component";
+        Component *component = ComponentFactory::createComponent(componentType);
+        if (component) {
+            component->setPos(scenePos);
+            this->scene->addItem(component); // 多态：基类指针直接使用
+            qDebug()<<"加入组件";
+            emit signal_addItemInList(nullptr,component->item);
+        }else{
+            qDebug()<<"component为空";
+        }
     }
+
     event->acceptProposedAction();
 }

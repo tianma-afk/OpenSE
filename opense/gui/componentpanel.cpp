@@ -73,8 +73,8 @@ void ComponentPanel::initialData()
     //加入数据
     ComponentMenuItem* item1=new ComponentMenuItem();
     item1->setMenuName("用户界面");
-    item1->model->addItem(new ComponentItem("button", QIcon(":/icons/button.png"), "用于触发点击事件"));
-    item1->model->addItem(new ComponentItem("label", QIcon(":/icons/label.png"), "用于显示文本"));
+    item1->model->addItem(new ComponentItem("Button", QIcon(":/icons/Button.png"), "用于触发点击事件"));
+    item1->model->addItem(new ComponentItem("TextBox", QIcon(":/icons/TextBox.png"), "用于显示文本"));
 
     ComponentMenuItem*item2=new ComponentMenuItem();
     item2->setMenuName("界面布局");

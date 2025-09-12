@@ -25,12 +25,14 @@ private:
     QStandardItemModel* m_standardItemModel;
     QStandardItem* root;
     QVector<QStandardItem*>screens;
+    QVector<Component*>components;
     void initialUI();
     void initialData();
 signals:
+    void signal_componentSelected(Component*component);
 public slots:
     void on_treeView_currentChanged(const QModelIndex& current, const QModelIndex& previous);
-    void on_addItemInList(QStandardItem*parent,QStandardItem*self);
+    void on_addItemInList(Component*parent,Component*self);
 };
 
 #endif // COMPONENTLIST_H

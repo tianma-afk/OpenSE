@@ -17,7 +17,6 @@ SOURCES += \
     gui/appinventorwidget.cpp \
     gui/clicklabel.cpp \
     gui/componentdelegate.cpp \
-    gui/componentitem.cpp \
     gui/componentlist.cpp \
     gui/componentmenuitem.cpp \
     gui/componentmodel.cpp \
@@ -40,12 +39,12 @@ HEADERS += \
     components/TextBox.h \
     core/coder.h \
     core/componentfactory.h \
+    core/componentmeta.h \
     core/componentregister.h \
     core/inventworker.h \
     gui/appinventorwidget.h \
     gui/clicklabel.h \
     gui/componentdelegate.h \
-    gui/componentitem.h \
     gui/componentlist.h \
     gui/componentmenuitem.h \
     gui/componentmodel.h \

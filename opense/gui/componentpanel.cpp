@@ -1,7 +1,7 @@
 #include "componentpanel.h"
 #include<QStyleOption>
 #include<QPainter>
-
+#include"core/componentfactory.h"
 ComponentPanel::ComponentPanel(QWidget *parent):QWidget(parent)
 {
     this->initialUI();
@@ -10,6 +10,7 @@ ComponentPanel::ComponentPanel(QWidget *parent):QWidget(parent)
 
 void ComponentPanel::onItemClicked(const QModelIndex &index)
 {
+    qDebug()<<"被点击";
     if(this->model->isExpand==false){
         this->model->isExpand=true;
         this->model->expandIndex=index;
@@ -32,6 +33,7 @@ void ComponentPanel::onItemClicked(const QModelIndex &index)
             emit model->dataChanged(index, index);
         }
     }
+    qDebug()<<"点击完成";
 }
 
 void ComponentPanel::onItemAdded(const QModelIndex &index)
@@ -73,8 +75,11 @@ void ComponentPanel::initialData()
     //加入数据
     ComponentMenuItem* item1=new ComponentMenuItem();
     item1->setMenuName("用户界面");
-    item1->model->addItem(new ComponentItem("Button", QIcon(":/icons/Button.png"), "用于触发点击事件"));
-    item1->model->addItem(new ComponentItem("TextBox", QIcon(":/icons/TextBox.png"), "用于显示文本"));
+    std::vector<ComponentMeta> allMetas = ComponentFactory::getAllComponentsMeta();
+    // 遍历元信息，自动添加到组件面板
+    for (const ComponentMeta&meta : allMetas) {
+        item1->model->addItem(new ComponentMeta{meta.type,meta.iconPath,meta.description});
+    }
 
     ComponentMenuItem*item2=new ComponentMenuItem();
     item2->setMenuName("界面布局");

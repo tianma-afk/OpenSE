@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QList>
-#include "componentitem.h"
+#include "core/componentmeta.h"
 
 // 组件模型，管理组件数据并提供给视图
 class ComponentModel : public QAbstractListModel
@@ -25,12 +25,12 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
     // 添加组件项
-    void addItem(ComponentItem* item);
+    void addItem(ComponentMeta* item);
     // 获取指定索引的组件项
-    ComponentItem* getItem(const QModelIndex& index) const;
+    ComponentMeta* getItem(const QModelIndex& index) const;
 
 private:
-    QList<ComponentItem*> m_items; // 存储组件数据的列表
+    QList<ComponentMeta*> m_items; // 存储组件数据的列表
 };
 
 #endif // COMPONENTMODEL_H

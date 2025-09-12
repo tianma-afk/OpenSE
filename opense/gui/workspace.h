@@ -32,7 +32,7 @@ private:
 
 public:
 signals:
-    void signal_addItemInList(QStandardItem*parent,QStandardItem*self);
+    void signal_addItemInList(Component*parent,Component*self);
 };
 
 #endif // WORKSPACE_H

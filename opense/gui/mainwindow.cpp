@@ -6,15 +6,18 @@
 #include<QFileDialog>
 #include<QPropertyAnimation>
 #include<QApplication>
+#include<windows.h>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    // 设置窗口固定大小为屏幕尺寸
+
     QRect mainScreenGeometry = QGuiApplication::primaryScreen()->availableGeometry();
     QSize screenSize=mainScreenGeometry.size();
+
     setMinimumSize(screenSize);
+    this->showMaximized();
 
     createMenu();
     initialWidget();
@@ -64,15 +67,13 @@ void MainWindow::initialWidget()
 
 void MainWindow::floatWidget(QWidget *widget,bool isToFloat)
 {
-    if(isToFloat==true){
-        int statusBarHeight = statusBar()->height();
-        int menuBarHeight = menuBar()->height();
-        int windowHeight = this->height();
-
+    int statusBarHeight = statusBar()->height();
+    int menuBarHeight = menuBar()->height();
+    int windowHeight = this->height();
+    if(isToFloat==true){      
         // 设置 widget的初始位置和大小
         widget->setGeometry(0, windowHeight - statusBarHeight, this->width(),10);
         widget->show();
-
         // 创建并启动动画，让部件向上移动到菜单栏下方
         QPropertyAnimation *animation = new QPropertyAnimation( widget, "geometry");
         animation->setDuration(300); // 动画持续时间，单位毫秒
@@ -80,10 +81,6 @@ void MainWindow::floatWidget(QWidget *widget,bool isToFloat)
         animation->setEndValue(QRect(0, menuBarHeight, this->width(), windowHeight - menuBarHeight-statusBarHeight));
         animation->start(QAbstractAnimation::DeleteWhenStopped);
     }else{
-        int statusBarHeight = statusBar()->height();
-        int menuBarHeight = menuBar()->height();
-        int windowHeight = this->height();
-
         // 创建并启动动画，让部件向下移动到状态栏位置
         QPropertyAnimation *animation = new QPropertyAnimation(widget, "geometry");
         animation->setDuration(300);

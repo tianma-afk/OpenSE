@@ -23,14 +23,14 @@ QVariant ComponentModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     // 获取对应的数据项
-    ComponentItem* item = m_items[index.row()];
+    ComponentMeta* item = m_items[index.row()];
 
     // 根据角色返回不同类型的数据
     switch (role) {
     case NameRole:
-        return item->name;
+        return item->type;
     case IconRole:
-        return item->icon;
+        return QIcon(item->iconPath);
     case DescriptionRole:
         return item->description;
     default:
@@ -49,7 +49,7 @@ QHash<int, QByteArray> ComponentModel::roleNames() const
 }
 
 // 添加新的组件项
-void ComponentModel::addItem(ComponentItem *item)
+void ComponentModel::addItem(ComponentMeta *item)
 {
     if (!item) return;
 
@@ -61,7 +61,7 @@ void ComponentModel::addItem(ComponentItem *item)
 }
 
 // 获取指定索引的组件项
-ComponentItem *ComponentModel::getItem(const QModelIndex &index) const
+ComponentMeta *ComponentModel::getItem(const QModelIndex &index) const
 {
     if (index.isValid() && index.row() < m_items.count()) {
         return m_items[index.row()];

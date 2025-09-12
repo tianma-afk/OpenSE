@@ -28,6 +28,6 @@ private:
 };
 
 // 注册组件
-REGISTER_COMPONENT(TextBox)
+REGISTER_COMPONENT(TextBox, ":/icons/TextBox.png", "用于显示文本")
 
 #endif // TEXTBOX_H

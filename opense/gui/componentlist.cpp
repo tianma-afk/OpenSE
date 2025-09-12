@@ -64,9 +64,23 @@ void ComponentList::on_treeView_currentChanged(const QModelIndex &current, const
 {
     this->btn_changeName->setDisabled(false);
     this->btn_delete->setDisabled(false);
+    QStandardItemModel *model = qobject_cast<QStandardItemModel*>(treeView->model());
+    if (model && current.isValid()) {
+        QStandardItem *currentItem = model->itemFromIndex(current);
+        if (currentItem) {
+            for(int i=0;i<this->components.count();i++){
+                if(this->components.at(i)->item==currentItem){
+                    emit this->signal_componentSelected(this->components.at(i));
+                    break;
+                }
+            }
+        }
+    }
 }
 
-void ComponentList::on_addItemInList(QStandardItem *parent, QStandardItem *self)
+void ComponentList::on_addItemInList(Component *parent, Component *self)
 {
-    this->screens.at(0)->appendRow(self);
+    this->screens.at(0)->appendRow(self->item);
+    this->components.push_back(self);
 }
+

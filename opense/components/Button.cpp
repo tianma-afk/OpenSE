@@ -73,6 +73,9 @@ void Button::setProperty(const QString &name, const QVariant &value) {
         size.setHeight(value.toDouble());
         item->setData(size, Data::size);
         update();
+    } else if(name=="objName"){
+        item->setData(value, Data::objName);
+        update();
     }
 }
 
@@ -83,6 +86,8 @@ QVariant Button::getProperty(const QString &name) const {
         return item->data(Data::size).toSizeF().width();
     } else if (name == "height") {
         return item->data(Data::size).toSizeF().height();
+    } else if (name == "objName") {
+        return item->data(Data::objName);
     }
     return QVariant();
 }

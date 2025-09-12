@@ -79,7 +79,7 @@ void WorkSpace::dropEvent(QDropEvent *event) {
             component->setPos(scenePos);
             this->scene->addItem(component); // 多态：基类指针直接使用
             qDebug()<<"加入组件";
-            emit signal_addItemInList(nullptr,component->item);
+            emit signal_addItemInList(nullptr,component);
         }else{
             qDebug()<<"component为空";
         }

@@ -170,6 +170,8 @@ void AppInventorWidget::initialData()
 
     connect(this->ws,&WorkSpace::signal_addItemInList,this->cl,&ComponentList::on_addItemInList);
     connect(this->ws,&WorkSpace::signal_addItemInList,this->coder,&Coder::work);
+
+    connect(this->cl,&ComponentList::signal_componentSelected,this->pp,&PropertyPanel::slot_ComponentSelected);
 }
 
 void AppInventorWidget::onInventWorkerOutput(const QString &output)

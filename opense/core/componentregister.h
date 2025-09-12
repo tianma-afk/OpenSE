@@ -1,24 +1,28 @@
 #ifndef COMPONENTREGISTER_H
 #define COMPONENTREGISTER_H
 
-#include"componentfactory.h"
-// 注册工具类（通过模板实现自动注册）
+#include "components/component.h"
+#include "core/componentFactory.h"
+#include "core/componentMeta.h"
+
 template <typename T>
 class ComponentRegister {
 public:
-    // 构造函数：在全局变量初始化时自动调用，完成注册
-    ComponentRegister() {
-        // 调用工厂的注册函数，绑定类型和创建函数
+    // 构造函数：接收元信息，完成注册
+    ComponentRegister(const ComponentMeta &meta) {
         ComponentFactory::registerComponent(
             T::staticType(),
-            [](){ return new T(); } //  lambda表达式：创建组件实例
+            [](){ return new T(); },
+            meta // 传入元信息
             );
     }
 };
 
-// 宏定义：简化组件注册（在组件类定义后使用）
-#define REGISTER_COMPONENT(ClassName) \
-static ComponentRegister<ClassName> s_##ClassName##_register;
+// 宏定义：注册组件时指定元信息
+#define REGISTER_COMPONENT(ClassName, iconPath, description) \
+static ComponentRegister<ClassName> s_##ClassName##_register( \
+    ComponentMeta{ClassName::staticType(), iconPath, description} \
+    );
 
 
 #endif // COMPONENTREGISTER_H

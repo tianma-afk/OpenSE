@@ -25,6 +25,6 @@ public:
 };
 
 // 注册组件
-REGISTER_COMPONENT(Button)
+REGISTER_COMPONENT(Button, ":/icons/Button.png", "用于触发点击事件")
 
 #endif // BUTTON_H

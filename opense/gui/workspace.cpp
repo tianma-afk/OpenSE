@@ -46,6 +46,18 @@ void WorkSpace::initialUI()
     this->view->setAttribute(Qt::WA_TransparentForMouseEvents, true); // 让视图对鼠标事件“透明”，优先触发父部件事件
 }
 
+void WorkSpace::drawComponent(const QString &componentType, const QPointF &scenePos)
+{
+    // 关键：通过工厂创建组件，无需知道具体类
+    qDebug()<<"创建component";
+    Component *component = ComponentFactory::createComponent(componentType);
+    if (component!=nullptr) {
+        component->setPos(scenePos);
+        this->scene->addItem(component);
+        qDebug()<<"加入组件";
+        emit signal_addItemInList(nullptr,component);
+    }
+}
 
 // 处理拖拽进入：只接受文本类型的组件数据
 void WorkSpace::dragEnterEvent(QDragEnterEvent *event) {
@@ -68,22 +80,9 @@ void WorkSpace::dragMoveEvent(QDragMoveEvent *event)
 void WorkSpace::dropEvent(QDropEvent *event) {
     QString componentType = event->mimeData()->text();
     if (componentType.isEmpty()) return;
-    // 将视图坐标（鼠标位置）转换为场景坐标
     QPointF scenePos = this->view->mapToScene(event->position().toPoint());
-    // 检查是否在手机屏幕区域内
     if (this->screenRect.contains(scenePos)) {
-        // 关键：通过工厂创建组件，无需知道具体类
-        qDebug()<<"创建component";
-        Component *component = ComponentFactory::createComponent(componentType);
-        if (component) {
-            component->setPos(scenePos);
-            this->scene->addItem(component); // 多态：基类指针直接使用
-            qDebug()<<"加入组件";
-            emit signal_addItemInList(nullptr,component);
-        }else{
-            qDebug()<<"component为空";
-        }
+        this->drawComponent(componentType,scenePos);
     }
-
     event->acceptProposedAction();
 }

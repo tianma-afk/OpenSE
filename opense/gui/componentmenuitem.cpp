@@ -35,7 +35,7 @@ void ComponentMenuItem::initialUI()
 
 void ComponentMenuItem::initialData()
 {
-    this->nameLabel->setText(this->menuName);
+    this->nameLabel->setText(this->getMenuName());
     nameLabel->installEventFilter(this);
     this->listView->setVisible(false);
     update();
@@ -45,12 +45,9 @@ void ComponentMenuItem::initialListView()
 {
     // 创建模型
     this->model = new ComponentModel(this);
-
     // 创建视图
     listView->setModel(model);
-
     // 设置委托
-    // this->delegate = new ComponentDelegate(this);
     this->delegate = new ComponentDelegate(this->listView);
     listView->setItemDelegate(delegate);
     // 优化性能

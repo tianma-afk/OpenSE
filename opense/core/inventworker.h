@@ -17,22 +17,6 @@ public:
     QString command_wrap=R"(gradle wrapper --gradle-version 8.2.1 --distribution-type all)";
     QString command_assemble=R"(gradlew.bat assembleDebug)";
     QString workDir=R"(D:\SEProject\demo)";
-
-signals:
-    // 命令输出信号
-    void outputReceived(const QString &output);
-    // 错误信息信号
-    void errorOccurred(const QString &error);
-    // 命令完成信号
-    void finished(int exitCode);
-    // 工作完成信号(用于线程退出)
-    void workDone();
-
-public slots:
-    // 开始执行命令
-    void startWork();
-    // 停止命令执行
-    void stopWork();
 private:
     QProcess m_process;
     // 用于跟踪当前执行的命令
@@ -42,6 +26,22 @@ private:
 private slots:
     // 处理命令输出并执行下一个命令
     void onReadyRead();
+
+signals:
+    // 命令输出信号
+    void outputReceived(const QString &output);
+    // 错误信息信号
+    void errorOccurred(const QString &error);
+    // 命令完成信号
+    void finished(int exitCode);
+    // 工作完成信号(用于线程退出)
+    void workFinished();
+
+public slots:
+    // 开始执行命令
+    void startWork();
+    // 停止命令执行
+    void stopWork();
 };
 
 #endif // INVENTWORKER_H

@@ -69,6 +69,7 @@ private:
     void initialList();
     void initialProperty();
     void initialData();
+    void initialCore();
 signals:
     void signal_inventOutput(const QString &output);
 public slots:

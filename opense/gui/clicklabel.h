@@ -11,10 +11,10 @@ class ClickLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit ClickLabel(const QString &url, QWidget *parent = nullptr);
+    explicit ClickLabel(QWidget *parent = nullptr);
+    void setUrl(const QString &url);
 
 protected:
-    // 鼠标点击事件
     void mousePressEvent(QMouseEvent *event) override;
 
 private:

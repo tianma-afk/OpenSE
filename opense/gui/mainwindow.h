@@ -30,13 +30,9 @@ private:
     //状态
     bool isSPHelperHidden=true;
     bool isInventorHidden=true;
-    //菜单栏
-    void createMenu();
-
-    //主页面
+    void initialMenu();
     void initialWidget();
-
-
+    void initialStatusBar();
     //其他函数
     void floatWidget(QWidget*widget,bool isToFloat);
     void openProject();

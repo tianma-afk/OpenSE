@@ -12,16 +12,11 @@ void HeadWidget::paintEvent(QPaintEvent *event)
     opt.initFrom(this);
     QPainter p(this);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
-
-    //保证父类操作正常进行
     QWidget::paintEvent(event);
-
     QPainter painter(this);
     painter.save();
 
-    // QStyleOptionButton buttonOption;
-    // QRect buttonRect = QRect(this->rect().right() - 80, this->rect().y() + 1, 78, this->rect().height() - 2);
-    // buttonOption.rect = buttonRect;
+
 
     QStyleOptionButton checkboxOption;
     QRect checkboxRect = QRect(this->rect().x() + 5, this->rect().y() + 5, this->rect().height() - 10, this->rect().height() - 10);
@@ -56,23 +51,20 @@ void HeadWidget::paintEvent(QPaintEvent *event)
 void HeadWidget::mousePressEvent(QMouseEvent *event)
 {
     QWidget::mousePressEvent(event);
-
     // 检查是否点击了复选框区域
     QRect checkBoxRect = QRect(rect().x() + 5,
                                rect().y() + 5,
                                rect().height() - 10,
                                rect().height() - 10);
     if (checkBoxRect.contains(event->pos())) {
-        // 切换复选框状态
         checkState = !checkState;
         emit checkedChanged(checkState);
-        // 重绘控件
         update();
     }
 }
 
 QSize HeadWidget::sizeHint() const {
-    return QSize(400, 34);  // 宽度400，高度34
+    return QSize(400, 34);
 }
 
 void HeadWidget::checkStateChangeForSingle(bool checked)

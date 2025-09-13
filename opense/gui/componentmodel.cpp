@@ -1,9 +1,7 @@
 #include "componentmodel.h"
 
 ComponentModel::ComponentModel(QObject *parent)
-    : QAbstractListModel(parent)
-{
-}
+    : QAbstractListModel(parent){}
 
 // 返回数据项数量
 int ComponentModel::rowCount(const QModelIndex &parent) const

@@ -15,12 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     QRect mainScreenGeometry = QGuiApplication::primaryScreen()->availableGeometry();
     QSize screenSize=mainScreenGeometry.size();
-
     setMinimumSize(screenSize);
     this->showMaximized();
 
-    createMenu();
+    initialMenu();
     initialWidget();
+    initialStatusBar();
 }
 
 MainWindow::~MainWindow()
@@ -28,7 +28,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::createMenu() {
+void MainWindow::initialMenu() {
     QMenuBar *menuBar=new QMenuBar();
     // 项目菜单
     QMenu *fileMenu = menuBar->addMenu("项目");
@@ -59,8 +59,12 @@ void MainWindow::initialWidget()
     this->projectWidget=new ProjectWidget(this);
     this->setCentralWidget(projectWidget);
     connect(this->projectWidget,&ProjectWidget::openProject,[=](){this->openProject();});
+}
 
-    this->githubLabel=new ClickLabel("https://github.com/tianma-afk/OpenSE",this);
+void MainWindow::initialStatusBar()
+{
+    this->githubLabel=new ClickLabel(this);
+    this->githubLabel->setUrl("https://github.com/tianma-afk/OpenSE");
     this->githubLabel->setPixmap(QPixmap(":/icons/github.svg"));
     this->statusBar()->addPermanentWidget(this->githubLabel);
 }

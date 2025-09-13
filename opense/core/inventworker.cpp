@@ -30,7 +30,7 @@ void InventWorker::initial()
             this, [this](int exitCode, QProcess::ExitStatus) {
                 qDebug() << "进程已退出，退出码：" << exitCode;
                 emit finished(exitCode);
-                emit workDone();
+                emit workFinished();
             });
 }
 
@@ -52,7 +52,7 @@ void InventWorker::startWork()
     qDebug()<<"InventorWorker开始工作";
     if (workDir.isEmpty()) {
         emit errorOccurred("工作目录未设置");
-        emit workDone();
+        emit workFinished();
         return;
     }
 
@@ -67,7 +67,7 @@ void InventWorker::startWork()
 
     if (!m_process.waitForStarted()) {
         emit errorOccurred("无法启动命令行进程");
-        emit workDone();
+        emit workFinished();
         return;
     }
 

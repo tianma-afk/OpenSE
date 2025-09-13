@@ -6,6 +6,7 @@ AppInventorWidget::AppInventorWidget(QWidget *parent)
 {
     this->initialUI();
     this->initialData();
+    this->initialCore();
 }
 
 void AppInventorWidget::appInvent()
@@ -15,18 +16,10 @@ void AppInventorWidget::appInvent()
 
 void AppInventorWidget::paintEvent(QPaintEvent *event)
 {
-    // 1. 初始化样式选项，关联当前窗口
     QStyleOption opt;
-    opt.initFrom(this);  // 从当前部件获取样式相关信息（包括QSS设置）
-
-    // 2. 创建画家对象
+    opt.initFrom(this);
     QPainter painter(this);
-
-    // 3. 关键：让样式系统根据QSS绘制窗口
-    // 这一步会自动读取并应用QSS中对MyWidget的样式定义
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
-
-    // 注意：如果有子部件或其他绘制逻辑，需要在这里继续处理
     QWidget::paintEvent(event);
 }
 
@@ -151,27 +144,27 @@ void AppInventorWidget::initialData()
 {
     this->nameLabel->setText("text");
 
+    connect(this->ws,&WorkSpace::signal_addItemInList,this->cl,&ComponentList::on_addItemInList);
+    connect(this->ws,&WorkSpace::signal_addItemInList,this->coder,&Coder::work);
+    connect(this->cl,&ComponentList::signal_componentSelected,this->pp,&PropertyPanel::slot_ComponentSelected);
+}
+
+void AppInventorWidget::initialCore()
+{
     this->coder=new Coder();
 
     inventThread = new QThread(this);// 初始化线程和工作对象
     inventWorker = new InventWorker(this);
     inventWorker->moveToThread(inventThread);// 将工作对象移动到线程
-    // 连接信号槽
-    connect(inventThread, &QThread::started,inventWorker, &InventWorker::startWork);
-    connect(inventWorker, &InventWorker::workDone, inventThread, &QThread::quit);
-    connect(inventWorker, &InventWorker::workDone, inventWorker, &InventWorker::deleteLater);
-    connect(inventThread, &QThread::finished, inventThread, &QThread::deleteLater);
 
+    connect(inventThread, &QThread::started,inventWorker, &InventWorker::startWork);
+    connect(inventWorker, &InventWorker::workFinished, inventThread, &QThread::quit);
+    connect(inventWorker, &InventWorker::workFinished, inventWorker, &InventWorker::deleteLater);
+    connect(inventThread, &QThread::finished, inventThread, &QThread::deleteLater);
     // 连接命令输出信号
     connect(inventWorker, &InventWorker::outputReceived, this, &AppInventorWidget::onInventWorkerOutput);
     connect(inventWorker, &InventWorker::errorOccurred, this, &AppInventorWidget::onInventWorkerError);
     connect(inventWorker, &InventWorker::finished, this, &AppInventorWidget::onInventWorkerFinished);
-
-
-    connect(this->ws,&WorkSpace::signal_addItemInList,this->cl,&ComponentList::on_addItemInList);
-    connect(this->ws,&WorkSpace::signal_addItemInList,this->coder,&Coder::work);
-
-    connect(this->cl,&ComponentList::signal_componentSelected,this->pp,&PropertyPanel::slot_ComponentSelected);
 }
 
 void AppInventorWidget::onInventWorkerOutput(const QString &output)

@@ -29,7 +29,7 @@ private:
     void paintEvent(QPaintEvent*event)override;
     void initialUI();
     void initialData();
-
+    void drawComponent(const QString&componentType,const QPointF&scenePos);
 public:
 signals:
     void signal_addItemInList(Component*parent,Component*self);

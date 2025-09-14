@@ -19,6 +19,7 @@ public:
 private:
     QVBoxLayout* vLayout;
     QTreeView* treeView;
+    QWidget*bottomWidget;
     QHBoxLayout* hLayout;
     QPushButton*btn_changeName;
     QPushButton*btn_delete;

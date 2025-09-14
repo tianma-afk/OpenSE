@@ -1,5 +1,5 @@
 #include "projectdelegate.h"
-
+#include"projectlistmodel.h"
 ProjectDelegate::ProjectDelegate(QObject* parent): QStyledItemDelegate(parent) {}
 
 // 绘制列表项
@@ -28,13 +28,13 @@ void ProjectDelegate::paint(QPainter* painter, const QStyleOptionViewItem& optio
 
     // 绘制文本
     QRect nameTextRect = option.rect.adjusted(checkboxRect.width() + 10, 0, - 200, 0);
-    painter->drawText(nameTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"projectName").toString());
+    painter->drawText(nameTextRect, Qt::AlignVCenter, index.data(ProjectListModel::ProjectRoles::NameRole).toString());
 
     QRect createTimeTextRect = option.rect.adjusted(option.rect.right()-350, 0, -150, 0);
-    painter->drawText(createTimeTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"createTime").toString());
+    painter->drawText(createTimeTextRect, Qt::AlignVCenter, index.data(ProjectListModel::ProjectRoles::CreateTimeRole).toString());
 
     QRect modifyTimeTextRect = option.rect.adjusted(option.rect.right()-150, 0, 0, 0);
-    painter->drawText(modifyTimeTextRect, Qt::AlignVCenter, this->model->getProjectData(index,"modifyTime").toString());
+    painter->drawText(modifyTimeTextRect, Qt::AlignVCenter, index.data(ProjectListModel::ProjectRoles::ModifyTimeRole).toString());
 
     painter->restore();
 }
@@ -66,24 +66,4 @@ bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, cons
 // 提供项的大小提示
 QSize ProjectDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const{
     return QSize(option.rect.width(), 34); // 调整为所需的大小
-}
-
-void ProjectDelegate::setModel(ProjectListModel *model)
-{
-    this->model=model;
-}
-
-
-void ProjectDelegate::checkAllchanged(bool checked)
-{
-    // 遍历所有行，更新选中状态
-    for (int row = 0; row < model->rowCount(); ++row) {
-        QModelIndex index = model->index(row, 0); // 假设第0列存储复选框状态
-        if (index.isValid()) {
-            // 设置所有项的选中状态
-            model->setData(index,
-                           checked ? Qt::Checked : Qt::Unchecked,
-                           Qt::CheckStateRole);
-        }
-    }
 }

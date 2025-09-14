@@ -2,55 +2,53 @@
 
 ProjectData::ProjectData() {}
 
-ProjectData::ProjectData(const QString &projectName)
-{
-    this->projectName=projectName;
-    this->createTime=QDateTime::currentDateTime();
-    this->modifyTime=this->createTime;
-}
 
 ProjectData::ProjectData(const ProjectData &data)
 {
-    this->projectName=data.projectName;
-    this->createTime=data.createTime;
-    this->modifyTime=data.modifyTime;
+    this->projectName=data.getProjectName();
+    this->createTime=data.getCreateTime();
+    this->modifyTime=data.getModifyTime();
 }
 
-QDataStream& operator<<(QDataStream&stream,const ProjectData data)
+QString ProjectData::getFilePath() const
 {
-    stream<<data.projectName<<data.createTime<<data.modifyTime;
-    return stream;
+    return filePath;
 }
 
-QDataStream& operator>>(QDataStream&stream,ProjectData data)
+void ProjectData::setFilePath(const QString &newFilePath)
 {
-    stream>>data.projectName>>data.createTime>>data.modifyTime;
-    return stream;
+    filePath = newFilePath;
 }
 
-void ProjectData::saveData(const ProjectData &data)
+QString ProjectData::getProjectName() const
 {
-    QFile file(this->filePath+this->projectName);
-    file.open(QIODevice::WriteOnly|QIODevice::Append);
-    QDataStream ds(&file);
-    ds<<data;
-    file.close();
+    return projectName;
 }
 
-void ProjectData::readData()
+void ProjectData::setProjectName(const QString &newProjectName)
 {
-    QFile file(this->filePath+this->projectName);
-    file.open(QIODevice::ReadOnly);
-    QDataStream ds(&file);
-    ProjectData data;
-    ds>>data;
-    this->projectName=data.projectName;
-    this->createTime=data.createTime;
-    this->modifyTime=data.modifyTime;
-    file.close();
+    projectName = newProjectName;
 }
 
-void ProjectData::setFilePath(const QString &path)
+void ProjectData::recordCreateTime()
 {
-    this->filePath=path;
+    this->createTime=QDateTime::currentDateTime();
 }
+
+QDateTime ProjectData::getCreateTime() const
+{
+    return createTime;
+}
+
+
+QDateTime ProjectData::getModifyTime() const
+{
+    return modifyTime;
+}
+
+void ProjectData::setModifyTime(const QDateTime &newModifyTime)
+{
+    modifyTime = newModifyTime;
+}
+
+

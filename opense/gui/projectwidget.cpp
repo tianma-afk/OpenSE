@@ -1,12 +1,13 @@
 #include "projectwidget.h"
-#include"projectlistmodel.h"
-#include"projectdelegate.h"
+#include"gui/newprojectdialog.h"
+#include"core/projectmanager.h"
 ProjectWidget::ProjectWidget(QWidget *parent)
     : QWidget{parent}
 {
     initialUI();
     initialData();
-
+    initialCore();
+    initialConnect();
 }
 
 void ProjectWidget::initialUI()
@@ -58,24 +59,41 @@ void ProjectWidget::initialUI()
 
 void ProjectWidget::initialData()
 {
-    QString path="D:\\SEProject\\";
-    QVector<ProjectData> datas;
-    ProjectData data("task_1");
-    data.setFilePath(path);
-    datas.push_back(data);
-
-    ProjectDelegate* delegate = new ProjectDelegate(listView);
-    ProjectListModel *model=new ProjectListModel(datas);
+    delegate = new ProjectDelegate(listView);
+    model=new ProjectListModel();
+    QVector<ProjectData> datas=ProjectManager::getInstance().getProjectDatas();
+    model->addProjectDatas(datas);
     listView->setModel(model);
-    delegate->setModel(model);
-
     listView->setItemDelegate(delegate);
-
-    connect(this->headWidget,&HeadWidget::checkedChanged,delegate,&ProjectDelegate::checkAllchanged);
-    connect(delegate,&ProjectDelegate::singleCheckedChange,this->headWidget,&HeadWidget::checkStateChangeForSingle);
-    connect(delegate,&ProjectDelegate::openProject,[=](){emit this->openProject();});
-    // 优化性能
     listView->setUniformItemSizes(true);
     listView->setSelectionMode(QAbstractItemView::SingleSelection);
-    // listView->show();
+}
+
+void ProjectWidget::initialCore()
+{
+}
+
+void ProjectWidget::initialConnect()
+{
+    connect(this->headWidget,&HeadWidget::checkedChanged,model,&ProjectListModel::checkAllchanged);
+    connect(delegate,&ProjectDelegate::singleCheckedChange,this->headWidget,&HeadWidget::checkStateChangeForSingle);
+    connect(delegate,&ProjectDelegate::openProject,[=](){emit this->openProject();});
+    connect(this->newProjectBtn,&QPushButton::clicked,this,&ProjectWidget::onNewProjectBtnClicked);
+    connect(this->removeProjectBtn,&QPushButton::clicked,this,&ProjectWidget::onRemoveProjectBtnClicked);
+}
+
+void ProjectWidget::onNewProjectBtnClicked()
+{
+    NewProjectDialog dialog(this);
+    if (dialog.exec() == QDialog::Accepted) {
+        QString name = dialog.projectName();
+        QString path = dialog.savePath();
+        ProjectData data=ProjectManager::getInstance().createProject(name, path);
+        model->addProjectData(data);
+    }
+}
+
+void ProjectWidget::onRemoveProjectBtnClicked()
+{
+    //this->projectManager->removeProject();
 }

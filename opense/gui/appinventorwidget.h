@@ -70,6 +70,7 @@ private:
     void initialProperty();
     void initialData();
     void initialCore();
+    void initialConnect();
 signals:
     void signal_inventOutput(const QString &output);
 public slots:

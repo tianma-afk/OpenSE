@@ -28,11 +28,14 @@ void ComponentList::initialUI()
     this->treeView=new QTreeView(this);
     this->vLayout->addWidget(this->treeView,1);
 
-    this->hLayout=new QHBoxLayout(this);
-    this->vLayout->addLayout(this->hLayout);
+    this->bottomWidget=new QWidget(this);
+    this->vLayout->addWidget(this->bottomWidget);
 
-    this->btn_changeName=new QPushButton(this);
-    this->btn_delete=new QPushButton(this);
+    this->hLayout=new QHBoxLayout(this->bottomWidget);
+    this->bottomWidget->setLayout(this->hLayout);
+
+    this->btn_changeName=new QPushButton(this->bottomWidget);
+    this->btn_delete=new QPushButton(this->bottomWidget);
     this->hLayout->addWidget(this->btn_changeName);
     this->hLayout->addWidget(this->btn_delete);
 }

@@ -14,6 +14,7 @@ SOURCES += \
     core/coder.cpp \
     core/componentfactory.cpp \
     core/inventworker.cpp \
+    core/projectmanager.cpp \
     gui/appinventorwidget.cpp \
     gui/clicklabel.cpp \
     gui/componentdelegate.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
     gui/componentpanelmodel.cpp \
     gui/headwidget.cpp \
     gui/mainwindow.cpp \
+    gui/newprojectdialog.cpp \
     gui/projectdata.cpp \
     gui/projectdelegate.cpp \
     gui/projectlistmodel.cpp \
@@ -42,6 +44,7 @@ HEADERS += \
     core/componentmeta.h \
     core/componentregister.h \
     core/inventworker.h \
+    core/projectmanager.h \
     gui/appinventorwidget.h \
     gui/clicklabel.h \
     gui/componentdelegate.h \
@@ -53,6 +56,7 @@ HEADERS += \
     gui/componentpanelmodel.h \
     gui/headwidget.h \
     gui/mainwindow.h \
+    gui/newprojectdialog.h \
     gui/projectdata.h \
     gui/projectdelegate.h \
     gui/projectlistmodel.h \

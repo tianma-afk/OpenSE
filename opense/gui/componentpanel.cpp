@@ -10,7 +10,6 @@ ComponentPanel::ComponentPanel(QWidget *parent):QWidget(parent)
 
 void ComponentPanel::onItemClicked(const QModelIndex &index)
 {
-    qDebug()<<"被点击";
     if(this->model->isExpand==false){
         this->model->isExpand=true;
         this->model->expandIndex=index;
@@ -33,7 +32,6 @@ void ComponentPanel::onItemClicked(const QModelIndex &index)
             emit model->dataChanged(index, index);
         }
     }
-    qDebug()<<"点击完成";
 }
 
 void ComponentPanel::onItemAdded(const QModelIndex &index)
@@ -43,7 +41,6 @@ void ComponentPanel::onItemAdded(const QModelIndex &index)
     this->listView->setIndexWidget(index, widget); // 绑定Widget到Item
     widget->setIndex(index);
     widget->initialData(); // 初始化数据
-
 }
 
 void ComponentPanel::initialUI()

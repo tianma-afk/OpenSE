@@ -1,31 +1,43 @@
 #include "projectlistmodel.h"
 
-ProjectListModel::ProjectListModel(const QVector<ProjectData>datas,QObject* parent)
-    :QAbstractListModel(parent),itemCount(datas.count()){
-    // 初始化数据数组
-    this->datas=datas;
+ProjectListModel::ProjectListModel(QObject* parent)
+    :QAbstractListModel(parent){}
+
+void ProjectListModel::addProjectDatas(const QVector<ProjectData> datas)
+{
+    qDebug()<<datas.count();
+    for(int i=0;i<datas.count();i++){
+        this->datas.push_back(datas.at(i));
+    }
 }
 
 void ProjectListModel::addProjectData(const ProjectData &data)
 {
-    this->itemCount++;
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
     this->datas.push_back(data);
+    endInsertRows();
 }
 
 int ProjectListModel::rowCount(const QModelIndex& parent)const{
     if (parent.isValid()) {
         return 0;
     }
-    return itemCount;
+    return datas.size();
 }
 
 QVariant ProjectListModel::data(const QModelIndex& index, int role) const {
-    if (!index.isValid() || index.row() >= itemCount || index.row() < 0) {
+    if (!index.isValid() || index.row() >= datas.size() || index.row() < 0) {
         return QVariant();
     }
     switch (role) {
     case Qt::DisplayRole:
-        return datas.at(index.row()).projectName;
+        return datas.at(index.row()).getProjectName();
+    case ProjectRoles::NameRole:
+        return datas.at(index.row()).getProjectName();
+    case ProjectRoles::CreateTimeRole:
+        return datas.at(index.row()).getCreateTime().toString("yyyy年M月d日H:m");
+    case ProjectRoles::ModifyTimeRole:
+        return datas.at(index.row()).getModifyTime().toString("yyyy年M月d日H:m");
     case Qt::CheckStateRole:
     {
         auto it = checkedItems.find(index.row());
@@ -40,7 +52,7 @@ QVariant ProjectListModel::data(const QModelIndex& index, int role) const {
 }
 
 bool ProjectListModel::setData(const QModelIndex& index, const QVariant& value, int role){
-    if (!index.isValid() || index.row() >= itemCount || index.row() < 0)
+    if (!index.isValid() || index.row() >= datas.size() || index.row() < 0)
         return false;
 
     // 更新 checkedItems，记录复选框的状态
@@ -66,18 +78,14 @@ int ProjectListModel::getCheckedNum() const
     return checkedNum;
 }
 
-QVariant ProjectListModel::getProjectData(const QModelIndex &index, const QString &tag) const
+void ProjectListModel::checkAllchanged(bool checked)
 {
-    if (!index.isValid() || index.row() >= itemCount || index.row() < 0) {
-        return QVariant();
-    }
-    if(tag=="projectName"){
-        return datas.at(index.row()).projectName;
-    }else if(tag=="createTime"){
-        return datas.at(index.row()).createTime.toString("yyyy年M月d日H:m");
-    }else if(tag=="modifyTime"){
-        return datas.at(index.row()).modifyTime.toString("yyyy年M月d日H:m");
-    }else{
-        return QVariant();
+    for (int row = 0; row < this->rowCount(); ++row) {
+        QModelIndex index = this->index(row, 0); // 假设第0列存储复选框状态
+        if (index.isValid()) {
+            this->setData(index,
+                           checked ? Qt::Checked : Qt::Unchecked,
+                           Qt::CheckStateRole);
+        }
     }
 }

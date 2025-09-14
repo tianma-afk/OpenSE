@@ -26,7 +26,7 @@ void WSScene::drawBackground(QPainter *painter, const QRectF &rect)
     qreal x=- (scaledSize.width()/ 2);
     qreal y=- (scaledSize.height() / 2);
     QPointF drawPos(x,y);
-    qDebug()<<drawPos;
+    // qDebug()<<drawPos;
     // 绘制缩放后的图片
     painter->drawPixmap(QRectF(drawPos, scaledSize), pixmap, QRectF(pixmap.rect()));
 }

@@ -7,6 +7,7 @@ AppInventorWidget::AppInventorWidget(QWidget *parent)
     this->initialUI();
     this->initialData();
     this->initialCore();
+    this->initialConnect();
 }
 
 void AppInventorWidget::appInvent()
@@ -32,7 +33,7 @@ void AppInventorWidget::initialUI()
     this->vLayout->addWidget(this->headWidget,0);
     this->headWidget->setObjectName("inventor_top");
 
-    this->headHLayout=new QHBoxLayout(this);
+    this->headHLayout=new QHBoxLayout(this->headWidget);
     this->headWidget->setLayout(this->headHLayout);
 
     this->nameLabel=new QLabel(this->headWidget);
@@ -143,25 +144,26 @@ void AppInventorWidget::initialProperty()
 void AppInventorWidget::initialData()
 {
     this->nameLabel->setText("text");
-
-    connect(this->ws,&WorkSpace::signal_addItemInList,this->cl,&ComponentList::on_addItemInList);
-    connect(this->ws,&WorkSpace::signal_addItemInList,this->coder,&Coder::work);
-    connect(this->cl,&ComponentList::signal_componentSelected,this->pp,&PropertyPanel::slot_ComponentSelected);
 }
 
 void AppInventorWidget::initialCore()
 {
     this->coder=new Coder();
 
-    inventThread = new QThread(this);// 初始化线程和工作对象
-    inventWorker = new InventWorker(this);
-    inventWorker->moveToThread(inventThread);// 将工作对象移动到线程
+    inventThread = new QThread(this);
+    inventWorker = new InventWorker();
+    inventWorker->moveToThread(inventThread);
+}
 
+void AppInventorWidget::initialConnect()
+{
+    connect(this->ws,&WorkSpace::signal_addItemInList,this->cl,&ComponentList::on_addItemInList);
+    connect(this->ws,&WorkSpace::signal_addItemInList,this->coder,&Coder::work);
+    connect(this->cl,&ComponentList::signal_componentSelected,this->pp,&PropertyPanel::slot_ComponentSelected);
     connect(inventThread, &QThread::started,inventWorker, &InventWorker::startWork);
     connect(inventWorker, &InventWorker::workFinished, inventThread, &QThread::quit);
     connect(inventWorker, &InventWorker::workFinished, inventWorker, &InventWorker::deleteLater);
     connect(inventThread, &QThread::finished, inventThread, &QThread::deleteLater);
-    // 连接命令输出信号
     connect(inventWorker, &InventWorker::outputReceived, this, &AppInventorWidget::onInventWorkerOutput);
     connect(inventWorker, &InventWorker::errorOccurred, this, &AppInventorWidget::onInventWorkerError);
     connect(inventWorker, &InventWorker::finished, this, &AppInventorWidget::onInventWorkerFinished);

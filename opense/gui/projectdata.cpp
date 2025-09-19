@@ -35,6 +35,11 @@ void ProjectData::recordCreateTime()
     this->createTime=QDateTime::currentDateTime();
 }
 
+void ProjectData::setCreateTime(const QDateTime &createTime)
+{
+    this->createTime=createTime;
+}
+
 QDateTime ProjectData::getCreateTime() const
 {
     return createTime;

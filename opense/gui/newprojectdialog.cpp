@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDir>
-
+#include"core/configreader.h"
 NewProjectDialog::NewProjectDialog(QWidget *parent) : QDialog(parent)
 {
     // 设置对话框基本属性
@@ -65,7 +65,7 @@ QString NewProjectDialog::savePath() const
 
 void NewProjectDialog::onBrowseClicked()
 {
-    QString defaultPath = QDir::homePath(); // 默认路径为用户主目录
+    QString defaultPath = ConfigReader::getInstance()->getProjectsDirectory();
     if (!m_savePathEdit->text().isEmpty()) {
         defaultPath = m_savePathEdit->text();
     }

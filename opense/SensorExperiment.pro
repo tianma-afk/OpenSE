@@ -13,6 +13,7 @@ SOURCES += \
     components/TextBox.cpp \
     core/coder.cpp \
     core/componentfactory.cpp \
+    core/configreader.cpp \
     core/inventworker.cpp \
     core/projectmanager.cpp \
     gui/appinventorwidget.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     core/componentfactory.h \
     core/componentmeta.h \
     core/componentregister.h \
+    core/configreader.h \
     core/inventworker.h \
     core/projectmanager.h \
     gui/appinventorwidget.h \

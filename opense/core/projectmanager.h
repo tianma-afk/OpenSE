@@ -10,13 +10,16 @@ public:
     ProjectManager& operator=(const ProjectManager&) = delete;
     ProjectData& createProject(const QString&projectName,const QString& path);
     void removeProject(const QString&projectName);
-    void loadProject(const QString&projectName);
-    void saveProject(const QString&projectName);
+    void saveProject(const ProjectData&project);
     void setProjectsPath(const QString&path);
     QVector<ProjectData>& getProjectDatas();
 private:
-    ProjectManager()=default;
+    ProjectManager();
     QVector<ProjectData> projects;
+    QString projectsPath;
+    QStringList getDirectSubDirectoryNames()const;
+    void loadProject(const QString&projectName);
+    void loadAll();
 signals:
 };
 

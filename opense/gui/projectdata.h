@@ -15,10 +15,10 @@ public:
     QString getProjectName() const;
     void setProjectName(const QString &newProjectName);
     void recordCreateTime();
+    void setCreateTime(const QDateTime &createTime);
     QDateTime getCreateTime() const;
     QDateTime getModifyTime() const;
     void setModifyTime(const QDateTime &newModifyTime);
-
 private:
     QString filePath;
     QString projectName;

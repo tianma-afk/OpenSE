@@ -7,6 +7,8 @@
 #include<QPropertyAnimation>
 #include<QApplication>
 #include<windows.h>
+#include"core/statusmanager.h"
+#include"core/projectmanager.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -33,10 +35,10 @@ void MainWindow::initialMenu() {
     // 项目菜单
     QMenu *fileMenu = menuBar->addMenu("项目");
     fileMenu->addAction("我的项目", this, [=]() {onMenuMyProjectsTriggered();});
-    fileMenu->addAction("新项目",this, [=]() {});
-    fileMenu->addAction("删除项目", this,[=](){});
+    fileMenu->addAction("新项目",this, [=]() {onMenuNewProjectTriggered();});
+    fileMenu->addAction("删除项目", this,[=](){onMenuRemoveProjectTriggered();});
     fileMenu->addSeparator();
-    fileMenu->addAction("保存项目", this, []() { /* 保存逻辑 */ });
+    fileMenu->addAction("保存项目", this, [=]() {onMenuSaveProjectTriggered();});
 
     //构建菜单
     QMenu *buildMenu = menuBar->addMenu("构建");
@@ -67,6 +69,8 @@ void MainWindow::initialStatusBar()
     this->githubLabel->setUrl("https://github.com/tianma-afk/OpenSE");
     this->githubLabel->setPixmap(QPixmap(":/icons/github.svg"));
     this->statusBar()->addPermanentWidget(this->githubLabel);
+    statusBar()->showMessage("就绪");
+    connect(StatusManager::getInstance(),&StatusManager::showStatusMessage,statusBar(),&QStatusBar::showMessage);
 }
 
 void MainWindow::floatWidget(QWidget *widget,bool isToFloat)
@@ -80,7 +84,7 @@ void MainWindow::floatWidget(QWidget *widget,bool isToFloat)
         widget->show();
         // 创建并启动动画，让部件向上移动到菜单栏下方
         QPropertyAnimation *animation = new QPropertyAnimation( widget, "geometry");
-        animation->setDuration(300); // 动画持续时间，单位毫秒
+        animation->setDuration(300);
         animation->setStartValue(QRect(0, windowHeight - statusBarHeight, this->width(), 0));
         animation->setEndValue(QRect(0, menuBarHeight, this->width(), windowHeight - menuBarHeight-statusBarHeight));
         animation->start(QAbstractAnimation::DeleteWhenStopped);
@@ -109,6 +113,7 @@ void MainWindow::openProject()
     if(this->isInventorHidden==true)
     {
         this->statusBar()->showMessage("打开项目");
+        qobject_cast<AppInventorWidget*>(inventor)->updateData();
         this->isInventorHidden=false;
         this->floatWidget(this->inventor,true);
     }else{
@@ -129,6 +134,18 @@ void MainWindow::onMenuMyProjectsTriggered()
         this->isInventorHidden=true;
         this->floatWidget(this->inventor,false);
     }
+}
+
+void MainWindow::onMenuNewProjectTriggered()
+{
+    this->onMenuMyProjectsTriggered();
+    this->projectWidget->onNewProjectBtnClicked();
+}
+
+void MainWindow::onMenuRemoveProjectTriggered()
+{
+    this->onMenuMyProjectsTriggered();
+    this->projectWidget->onRemoveProjectBtnClicked();
 }
 
 
@@ -161,5 +178,13 @@ void MainWindow::onMenuAppInventorTriggered()
     }
 }
 
-
-
+void MainWindow::onMenuSaveProjectTriggered()
+{
+    if(ProjectManager::getInstance().haveWorkProject()){
+        this->statusBar()->showMessage("没有项目处于工作状态");
+    }else{
+        QString name=ProjectManager::getInstance().getWorkProject().getProjectName();
+        ProjectManager::getInstance().saveProject(ProjectManager::getInstance().getWorkProject());
+        this->statusBar()->showMessage("保存"+name+"成功");
+    }
+}

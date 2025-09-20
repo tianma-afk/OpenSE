@@ -1,5 +1,6 @@
 #include "projectdelegate.h"
 #include"projectlistmodel.h"
+#include"core/projectmanager.h"
 ProjectDelegate::ProjectDelegate(QObject* parent): QStyledItemDelegate(parent) {}
 
 // 绘制列表项
@@ -56,6 +57,7 @@ bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, cons
             }
         }else if(projectNameRect.contains(mouseEvent->pos())){
             //打开项目
+            ProjectManager::getInstance().setWorkProject(index.data(ProjectListModel::ProjectRoles::NameRole).toString());
             emit openProject();
         }
         return true; // 事件已处理

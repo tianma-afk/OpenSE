@@ -5,9 +5,21 @@ ProjectData::ProjectData() {}
 
 ProjectData::ProjectData(const ProjectData &data)
 {
-    this->projectName=data.getProjectName();
-    this->createTime=data.getCreateTime();
-    this->modifyTime=data.getModifyTime();
+    this->setProjectName(data.getProjectName());
+    this->setCreateTime(data.getCreateTime());
+    this->setModifyTime(data.getModifyTime());
+    this->setFilePath(data.getFilePath());
+}
+
+ProjectData &ProjectData::operator=(const ProjectData &other)
+{
+    if(this!=&other){
+        this->setProjectName(other.getProjectName());
+        this->setCreateTime(other.getCreateTime());
+        this->setModifyTime(other.getModifyTime());
+        this->setFilePath(other.getFilePath());
+    }
+    return *this;
 }
 
 QString ProjectData::getFilePath() const

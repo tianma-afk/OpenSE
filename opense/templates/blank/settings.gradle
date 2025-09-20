@@ -1,0 +1,8 @@
+// 声明项目包含的模块（通常是 :app 模块）
+include ':app'  
+
+// 可选：设置项目显示名称（AS 中项目结构里显示的名称）
+rootProject.name = "HelloWorld"  
+
+// 可选：如果有其他模块（如 :library），继续添加
+// include ':library'  

@@ -1,6 +1,7 @@
 #include "appinventorwidget.h"
 #include <QPainter>
 #include <QStyleOption>
+#include"core/projectmanager.h"
 AppInventorWidget::AppInventorWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -143,7 +144,7 @@ void AppInventorWidget::initialProperty()
 
 void AppInventorWidget::initialData()
 {
-    this->nameLabel->setText("text");
+    this->updateData();
 }
 
 void AppInventorWidget::initialCore()
@@ -167,6 +168,12 @@ void AppInventorWidget::initialConnect()
     connect(inventWorker, &InventWorker::outputReceived, this, &AppInventorWidget::onInventWorkerOutput);
     connect(inventWorker, &InventWorker::errorOccurred, this, &AppInventorWidget::onInventWorkerError);
     connect(inventWorker, &InventWorker::finished, this, &AppInventorWidget::onInventWorkerFinished);
+}
+
+void AppInventorWidget::updateData()
+{
+    this->project=ProjectManager::getInstance().getWorkProject();
+    this->nameLabel->setText(this->project.getProjectName());
 }
 
 void AppInventorWidget::onInventWorkerOutput(const QString &output)

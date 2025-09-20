@@ -13,7 +13,7 @@ public:
     ConfigReader& operator=(const ConfigReader&) = delete;
     static ConfigReader* getInstance();
     bool loadConfig();
-    bool saveConfig(const QString& filePath = "");
+    bool saveConfig();
     QString getWorkDirectory() const;
     void setWorkDirectory(const QString& workDir);
     QString getProjectsDirectory()const;
@@ -22,7 +22,7 @@ private:
     explicit ConfigReader(QObject *parent = nullptr);
     static ConfigReader* m_instance;
     QJsonObject m_configData;
-    QString m_configFilePath;
+    QString m_configFilePath="://settings/config.json";
 };
 
 #endif // CONFIGREADER_H

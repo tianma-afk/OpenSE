@@ -89,3 +89,26 @@ void ProjectListModel::checkAllchanged(bool checked)
         }
     }
 }
+
+QStringList ProjectListModel::getCheckedItemName() const
+{
+    QStringList list;
+    for(int i=0;i<datas.count();i++){
+        if(checkedItems[i]==true){
+            list<<datas.at(i).getProjectName();
+        }
+    }
+    return list;
+}
+
+void ProjectListModel::removeCheckedItems()
+{
+    for(int row=datas.size()-1;row>=0;row--){
+        if(checkedItems[row]==QVariant(Qt::Checked).toBool()){
+            datas.removeAt(row);
+            checkedItems[row]=QVariant(Qt::Unchecked).toBool();
+            this->removeRow(row);
+            checkedNum--;
+        }
+    }
+}

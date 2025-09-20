@@ -47,6 +47,7 @@ HEADERS += \
     core/configreader.h \
     core/inventworker.h \
     core/projectmanager.h \
+    core/statusmanager.h \
     gui/appinventorwidget.h \
     gui/clicklabel.h \
     gui/componentdelegate.h \
@@ -76,4 +77,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    icon.qrc
+    icon.qrc \
+    setting.qrc \
+    template.qrc

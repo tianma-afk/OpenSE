@@ -9,7 +9,7 @@ class ProjectData
 public:
     ProjectData();
     ProjectData(const ProjectData&data);
-
+    ProjectData& operator=(const ProjectData& other);
     QString getFilePath() const;
     void setFilePath(const QString &newFilePath);
     QString getProjectName() const;

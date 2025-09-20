@@ -5,6 +5,7 @@
 #include"projectwidget.h"
 #include"appinventorwidget.h"
 #include"clicklabel.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -40,8 +41,12 @@ private:
 private slots:
     //菜单栏
     void onMenuMyProjectsTriggered();
+    void onMenuNewProjectTriggered();
+    void onMenuRemoveProjectTriggered();
+    void onMenuSaveProjectTriggered();
     void onMenuSerialPortTriggered();
     void onMenuAppInventorTriggered();
+
 
     //状态栏
 };

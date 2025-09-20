@@ -2,6 +2,7 @@
 #include<QDebug>
 #include<QTimer>
 #include<QDateTime>
+#include"core/statusmanager.h"
 InventWorker::InventWorker(QObject *parent)
     : QObject{parent}
 {
@@ -55,16 +56,12 @@ void InventWorker::startWork()
         emit workFinished();
         return;
     }
-
     // 重置命令索引
     m_commandIndex = 0;
-
     // 设置工作目录
     m_process.setWorkingDirectory(workDir);
-
     // 启动命令行
     m_process.start("cmd.exe");
-
     if (!m_process.waitForStarted()) {
         emit errorOccurred("无法启动命令行进程");
         emit workFinished();
@@ -105,7 +102,6 @@ void InventWorker::startWork()
                 this->stopWork();
             }
         } else if (m_process.bytesAvailable() > 0) {
-            // 有新输出，更新最后输出时间
             lastOutputTime = currentTime;
         }
     });
@@ -115,6 +111,7 @@ void InventWorker::startWork()
 void InventWorker::stopWork()
 {
     qDebug()<<"InventorWorker结束工作";
+    emit StatusManager::getInstance()->showStatusMessage("APP生成结束");
     if (m_process.state() == QProcess::Running) {
         m_process.kill();
         m_process.waitForFinished();

@@ -95,5 +95,9 @@ void ProjectWidget::onNewProjectBtnClicked()
 
 void ProjectWidget::onRemoveProjectBtnClicked()
 {
-    //this->projectManager->removeProject();
+    QStringList list=this->model->getCheckedItemName();
+    foreach (const QString& entry, list) {
+        ProjectManager::getInstance().removeProject(entry);
+    }
+    this->model->removeCheckedItems();
 }

@@ -22,12 +22,9 @@ ConfigReader* ConfigReader::getInstance()
 
 bool ConfigReader::loadConfig()
 {
-    QString filePath=QCoreApplication::applicationDirPath() + "/config.json";
-    QFile file(filePath);
+    QFile file(this->m_configFilePath);
     if (!file.exists()) {
-        qWarning() << "配置文件不存在:" << filePath;
-        qDebug()<<QDir::currentPath();
-        qDebug()<<QCoreApplication::applicationDirPath() + "/config.json";
+        qWarning() << "配置文件不存在";
         return false;
     }
 
@@ -51,26 +48,13 @@ bool ConfigReader::loadConfig()
         qWarning() << "JSON不是一个对象";
         return false;
     }
-
     m_configData = jsonDoc.object();
-    m_configFilePath = filePath;
-    qDebug() << "配置文件加载成功:" << filePath;
     return true;
 }
 
-bool ConfigReader::saveConfig(const QString &filePath)
+bool ConfigReader::saveConfig()
 {
-    QString savePath = filePath;
-    if (savePath.isEmpty()) {
-        savePath = m_configFilePath;
-    }
-
-    if (savePath.isEmpty()) {
-        qWarning() << "未指定配置文件路径";
-        return false;
-    }
-
-    QFile file(savePath);
+    QFile file(m_configFilePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         qWarning() << "无法打开配置文件进行写入:" << file.errorString();
         return false;
@@ -79,9 +63,6 @@ bool ConfigReader::saveConfig(const QString &filePath)
     QJsonDocument jsonDoc(m_configData);
     file.write(jsonDoc.toJson(QJsonDocument::Indented)); // 缩进格式，便于阅读
     file.close();
-
-    m_configFilePath = savePath;
-    qDebug() << "配置文件保存成功:" << savePath;
     return true;
 }
 

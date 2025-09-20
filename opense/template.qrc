@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>templates/blank/app/src/main/java/com/example/helloworld/MainActivity.java</file>
+        <file>templates/blank/app/src/main/res/layout/activity_main.xml</file>
+        <file>templates/blank/app/src/main/AndroidManifest.xml</file>
+        <file>templates/blank/app/build.gradle</file>
+        <file>templates/blank/gradle/wrapper/gradle-wrapper.jar</file>
+        <file>templates/blank/gradle/wrapper/gradle-wrapper.properties</file>
+        <file>templates/blank/build.gradle</file>
+        <file>templates/blank/gradle.properties</file>
+        <file>templates/blank/settings.gradle</file>
+    </qresource>
+</RCC>

@@ -13,12 +13,14 @@
 #include<QThread>
 #include"core/coder.h"
 #include"core/inventworker.h"
+#include"gui/projectdata.h"
 class AppInventorWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit AppInventorWidget(QWidget *parent = nullptr);
     void appInvent();
+    void updateData();
 protected:
     void paintEvent(QPaintEvent *event) override;
 
@@ -62,6 +64,7 @@ private:
     Coder*coder;
     QThread*inventThread;
     InventWorker*inventWorker;
+    ProjectData project;
 
     void initialUI();
     void initialComponent();
@@ -71,6 +74,7 @@ private:
     void initialData();
     void initialCore();
     void initialConnect();
+
 signals:
     void signal_inventOutput(const QString &output);
 public slots:

@@ -21,6 +21,8 @@ public:
     Qt::ItemFlags flags(const QModelIndex& index) const override;
     int getCheckedNum()const;
     void checkAllchanged(bool checked);
+    QStringList getCheckedItemName()const;
+    void removeCheckedItems();
 private:
     QVector<ProjectData> datas;
     mutable QHash<int, bool> checkedItems; // 存储复选框的状态

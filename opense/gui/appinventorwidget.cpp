@@ -150,7 +150,7 @@ void AppInventorWidget::initialData()
 void AppInventorWidget::initialCore()
 {
     this->coder=new Coder();
-
+    this->coder->setProjectData(this->project);
     inventThread = new QThread(this);
     inventWorker = new InventWorker();
     inventWorker->moveToThread(inventThread);
@@ -159,7 +159,7 @@ void AppInventorWidget::initialCore()
 void AppInventorWidget::initialConnect()
 {
     connect(this->ws,&WorkSpace::signal_addItemInList,this->cl,&ComponentList::on_addItemInList);
-    connect(this->ws,&WorkSpace::signal_addItemInList,this->coder,&Coder::work);
+    connect(this->ws,&WorkSpace::signal_addItemInList,this->coder,&Coder::addComponent);
     connect(this->cl,&ComponentList::signal_componentSelected,this->pp,&PropertyPanel::slot_ComponentSelected);
     connect(inventThread, &QThread::started,inventWorker, &InventWorker::startWork);
     connect(inventWorker, &InventWorker::workFinished, inventThread, &QThread::quit);

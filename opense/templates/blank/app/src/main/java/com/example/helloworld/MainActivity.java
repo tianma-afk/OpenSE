@@ -1,14 +1,17 @@
-package com.example.helloworld; // 包名，需与 AndroidManifest.xml 中一致
-
+package com.example.helloworld;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+     //[COMPONENT_VARS]
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // 加载 activity_main.xml 布局
         setContentView(R.layout.activity_main);
+        //[COMPONENT_INIT]
+        
+        //[COMPONENT_EVENTS]
     }
 }

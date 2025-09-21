@@ -131,6 +131,8 @@ bool ProjectManager::copyTemplate(const QString&resourcePath,const QString&targe
             if (!QFile::copy(resourceEntryPath, targetEntryPath)) {
                 qWarning() << "复制文件失败:" << resourceEntryPath << "→" << targetEntryPath;
                 return false;
+            }else{
+                QFile(targetEntryPath).setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
             }
         }
     }

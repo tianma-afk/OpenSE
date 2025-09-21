@@ -49,21 +49,18 @@ void WorkSpace::initialUI()
 void WorkSpace::drawComponent(const QString &componentType, const QPointF &scenePos)
 {
     // 关键：通过工厂创建组件，无需知道具体类
-    qDebug()<<"创建component";
     Component *component = ComponentFactory::createComponent(componentType);
     if (component!=nullptr) {
         component->setPos(scenePos);
         this->scene->addItem(component);
-        qDebug()<<"加入组件";
         emit signal_addItemInList(nullptr,component);
     }
 }
 
 // 处理拖拽进入：只接受文本类型的组件数据
 void WorkSpace::dragEnterEvent(QDragEnterEvent *event) {
-    qDebug()<<"进入";
     if (event->mimeData()->hasText()) {
-        event->acceptProposedAction(); // 接受拖拽
+        event->acceptProposedAction();
     }
 }
 

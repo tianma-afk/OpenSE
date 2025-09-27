@@ -17,15 +17,20 @@ void Coder::addComponent(Component *parent, Component *self)
     qDebug()<<"加入组件"<<self->componentType();
     //增加java代码
     // 1. 读取现有代码
-    QString javaPath=this->project.getFilePath()+"/app/src/main/java/com/example/helloworld/MainActivity.java";
+    QString javaPath=this->project.getJavaPath();
     QString code = readCodeFile(javaPath);
     if (code.isEmpty()) return;
     // 2. 生成代码片段
+    QString import=generateImport(*self);
     QString varDeclare = generateVarDeclare(*self);
     QString initCode = generateInitCode(*self);
     QString eventCode = generateEventCode(*self);
 
     // 3. 找到插入位置并插入（基于标记注释）
+    // 插入导入库到 [COMPONENT_VARS] 下方
+    code.replace("//[IMPORT]",
+                 "//[IMPORT]\n    " + import);
+
     // 插入变量声明到 [COMPONENT_VARS] 下方
     code.replace("//[COMPONENT_VARS]",
                  "//[COMPONENT_VARS]\n    " + varDeclare);
@@ -42,10 +47,12 @@ void Coder::addComponent(Component *parent, Component *self)
 
     //增加xml代码
     // 1. 读取现有代码
-    QString xmlPath=this->project.getFilePath()+"/app/src/main/res/layout/activity_main.xml";
+    QString xmlPath=this->project.getXMLPath();
+    qDebug()<<xmlPath;
     QString xml = readCodeFile(xmlPath);
     if (xml.isEmpty()) return;
     // 2. 生成代码片段
+    qDebug()<<"马上要生产xml文件";
     QString componentCode = generateXMLComponent(*self);
 
     // 3. 找到插入位置并插入（基于标记注释）
@@ -64,11 +71,15 @@ void Coder::initial()
 QString Coder::readCodeFile(const QString&path)
 {
     QFile file(path);
+    qDebug()<<path;
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+
         QString code=file.readAll();
+        qDebug()<<code;
         file.close();
         return code;
     }
+    qDebug()<<"文件没打开";
     return "";
 }
 
@@ -84,6 +95,11 @@ void Coder::writeCodeFile(const QString &content,const QString&path)
     }else{
         qDebug() << "OpenError 错误详情：" << file.errorString();
     }
+}
+
+QString Coder::generateImport(const Component &info)
+{
+    return QString("import android.widget.%1;").arg(info.componentType());
 }
 
 QString Coder::generateVarDeclare(const Component &info)

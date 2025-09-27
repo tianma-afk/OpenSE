@@ -68,4 +68,19 @@ void ProjectData::setModifyTime(const QDateTime &newModifyTime)
     modifyTime = newModifyTime;
 }
 
+QString ProjectData::getJavaPath()
+{
+    return this->getFilePath()+"/app/src/main/java/com/example/helloworld/MainActivity.java";
+}
+
+QString ProjectData::getXMLPath()
+{
+    return this->getFilePath()+"/app/src/main/res/layout/activity_main.xml";
+}
+
+QString ProjectData::getAPKPath()
+{
+    return this->getFilePath()+"/app/build/outputs/apk/debug/app-debug.apk";
+}
+
 

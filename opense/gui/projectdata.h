@@ -19,6 +19,9 @@ public:
     QDateTime getCreateTime() const;
     QDateTime getModifyTime() const;
     void setModifyTime(const QDateTime &newModifyTime);
+    QString getJavaPath();
+    QString getXMLPath();
+    QString getAPKPath();
 private:
     QString filePath;
     QString projectName;

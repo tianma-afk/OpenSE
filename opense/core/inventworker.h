@@ -12,17 +12,19 @@ public:
     explicit InventWorker(QObject *parent = nullptr);
     ~InventWorker();
     void initial();
-    QString javaPath=R"(D:\SEProject\demo\app\src\main\java\com\example\helloworld\MainActivity.java)";
-    QString xmlPath=R"(D:\SEProject\demo\app\src\main\res\layout\activity_main.xml)";
-    QString command_wrap=R"(gradle wrapper --gradle-version 8.2.1 --distribution-type all)";
-    QString command_assemble=R"(gradlew.bat assembleDebug)";
-    QString workDir=R"(D:\SEProject\demo)";
+    void setWorkDir(const QString &newWorkDir);
+    void setAPKPath(const QString &newAPKPath);
 private:
     QProcess m_process;
     // 用于跟踪当前执行的命令
     int m_commandIndex = 0;
     // 命令列表
     QStringList m_commands;
+    QString workDir;
+    QString command_wrap=R"(gradle wrapper --gradle-version 8.2.1 --distribution-type all)";
+    QString command_assemble=R"(gradlew.bat assembleDebug)";
+    QString APKPath;
+    void copyToDownloads();
 private slots:
     // 处理命令输出并执行下一个命令
     void onReadyRead();

@@ -160,6 +160,7 @@ void ProjectManager::setWorkProject(const QString &projectName)
         if(projects.at(i).getProjectName()==projectName){
             this->workProject=projects.at(i);
             this->isWorkProject=true;
+            qDebug()<<"找到工作项目";
             return;
         }
     }

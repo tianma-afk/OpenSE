@@ -154,6 +154,8 @@ void AppInventorWidget::initialCore()
     inventThread = new QThread(this);
     inventWorker = new InventWorker();
     inventWorker->moveToThread(inventThread);
+    this->inventWorker->setWorkDir(this->project.getFilePath());
+    this->inventWorker->setAPKPath(this->project.getAPKPath());
 }
 
 void AppInventorWidget::initialConnect()

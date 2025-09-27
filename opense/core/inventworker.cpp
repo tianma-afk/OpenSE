@@ -2,6 +2,10 @@
 #include<QDebug>
 #include<QTimer>
 #include<QDateTime>
+#include<QStandardPaths>
+#include<QFileInfo>
+#include<QDir>
+#include<QFile>
 #include"core/statusmanager.h"
 InventWorker::InventWorker(QObject *parent)
     : QObject{parent}
@@ -33,6 +37,57 @@ void InventWorker::initial()
                 emit finished(exitCode);
                 emit workFinished();
             });
+}
+
+
+void InventWorker::setWorkDir(const QString &newWorkDir)
+{
+    workDir = newWorkDir;
+}
+
+void InventWorker::setAPKPath(const QString &newAPKPath)
+{
+    this->APKPath=newAPKPath;
+}
+
+void InventWorker::copyToDownloads()
+{
+    // 获取系统下载文件夹路径
+    QString downloadsPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+
+    if (downloadsPath.isEmpty()) {
+        qWarning() << "无法获取下载文件夹路径";
+        return;
+    }
+
+    QDir downloadsDir(downloadsPath);
+    // 提取源文件的文件名
+    QFileInfo fileInfo(this->APKPath);
+    QString fileName = fileInfo.fileName();
+
+    // 目标文件路径
+    QString targetFilePath = downloadsDir.filePath(fileName);
+
+    // 如果目标文件已存在，添加编号避免覆盖
+    int counter = 1;
+    while (QFile::exists(targetFilePath)) {
+        QString newFileName = QString("%1(%2).%3")
+        .arg(fileInfo.baseName())
+            .arg(counter)
+            .arg(fileInfo.suffix());
+        targetFilePath = downloadsDir.filePath(newFileName);
+        counter++;
+    }
+
+    // 复制文件
+    if (QFile::copy(this->APKPath, targetFilePath)) {
+        qDebug() << "文件已成功复制到下载文件夹:" << targetFilePath;
+        return;
+    } else {
+        qWarning() << "文件复制失败";
+        return;
+    }
+    emit StatusManager::getInstance()->showStatusMessage("APP文件已经放入下载文件夹");
 }
 
 void InventWorker::onReadyRead()
@@ -99,6 +154,7 @@ void InventWorker::startWork()
                 m_process.write("exit\n");
                 timer->stop();
                 timer->deleteLater();
+                copyToDownloads();
                 this->stopWork();
             }
         } else if (m_process.bytesAvailable() > 0) {

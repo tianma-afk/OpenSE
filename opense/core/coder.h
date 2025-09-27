@@ -18,6 +18,7 @@ private:
     QString readCodeFile(const QString&path);
     void writeCodeFile(const QString& content,const QString&path);
 
+    QString generateImport(const Component& info);     // 导入库
     QString generateVarDeclare(const Component& info); // 变量声明
     QString generateInitCode(const Component& info);   // 初始化代码（findViewById）
     QString generateEventCode(const Component& info);  // 事件处理代码（点击事件）

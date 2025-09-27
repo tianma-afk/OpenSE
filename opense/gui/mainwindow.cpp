@@ -103,16 +103,19 @@ void MainWindow::floatWidget(QWidget *widget,bool isToFloat)
 
 void MainWindow::openProject()
 {
+    qDebug()<<"openProject";
     if(this->inventor==nullptr)
     {
+        qDebug()<<inventor;
         this->inventor=new AppInventorWidget(this);
         this->inventor->setObjectName("inventor");
         this->inventor->hide();
     }
-
+    qDebug()<<inventor;
     if(this->isInventorHidden==true)
     {
         this->statusBar()->showMessage("打开项目");
+        qDebug()<<"打开项目";
         qobject_cast<AppInventorWidget*>(inventor)->updateData();
         this->isInventorHidden=false;
         this->floatWidget(this->inventor,true);

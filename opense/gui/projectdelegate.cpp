@@ -57,6 +57,7 @@ bool ProjectDelegate::editorEvent(QEvent* event, QAbstractItemModel* model, cons
             }
         }else if(projectNameRect.contains(mouseEvent->pos())){
             //打开项目
+            qDebug()<<index.data(ProjectListModel::ProjectRoles::NameRole).toString();
             ProjectManager::getInstance().setWorkProject(index.data(ProjectListModel::ProjectRoles::NameRole).toString());
             emit openProject();
         }
